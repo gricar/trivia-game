@@ -28,7 +28,8 @@ class Login extends React.Component {
   }
 
   handleSumbit = () => {
-    const { dispatch, history } = this.props;
+    // const { dispatch, history } = this.props;
+    const { dispatch } = this.props;
     dispatch(fetchTokenThunk());
     // history.push('/game');
   };
@@ -60,17 +61,17 @@ class Login extends React.Component {
             />
           </label>
 
-        <button
-          disabled={ isButtonDisabled }
-          type="button"
-          data-testid="btn-play"
-          onClick={ this.handleSumbit }
-        >
-          Play
-        </button>
-      </form>
-      <ConfigButton />
-    </header>
+          <button
+            disabled={ isButtonDisabled }
+            type="button"
+            data-testid="btn-play"
+            onClick={ this.handleSumbit }
+          >
+            Play
+          </button>
+        </form>
+        <ConfigButton />
+      </header>
     );
   }
 }

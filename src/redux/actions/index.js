@@ -1,15 +1,17 @@
 import fetchToken from '../../services/fetchToken';
+import { saveInLocalStorage } from '../../services/localStorage';
 
-export const SAVE_TOKEN = 'SAVE_TOKEN';
+export const SAVE_USER_TOKEN = 'SAVE_USER_TOKEN';
 
-const saveToken = (token) => ({
-  type: SAVE_TOKEN,
-  token,
+const saveToken = (userToken) => ({
+  type: SAVE_USER_TOKEN,
+  userToken,
 });
 
 const fetchTokenThunk = () => async (dispatch) => {
-  const token = await fetchToken();
-  dispatch(saveToken(token));
+  const userToken = await fetchToken();
+  dispatch(saveToken(userToken));
+  saveInLocalStorage(userToken);
 };
 
 export default fetchTokenThunk;

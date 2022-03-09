@@ -4,16 +4,26 @@ class Login extends React.Component {
   state = {
     login: '',
     email: '',
+    isButtonDisabled: true,
+  }
+
+  validateEmail = () => {
+    const { login, email } = this.state;
+    if (login.length > 0 && email.length > 0) {
+      this.setState({
+        isButtonDisabled: false,
+      });
+    }
   }
 
   handleInput = ({ target: { name, value } }) => {
     this.setState({
       [name]: value,
-    });
+    }, this.validateEmail);
   }
 
   render() {
-    const { login, email } = this.state;
+    const { login, email, isButtonDisabled } = this.state;
     return (
       <form>
         <label htmlFor="login">
@@ -37,7 +47,14 @@ class Login extends React.Component {
           />
         </label>
 
-        <button type="submit" data-testid="btn-play">Play</button>
+        <button
+          disabled={ isButtonDisabled }
+          type="submit"
+          data-testid="btn-play"
+        >
+          Play
+
+        </button>
       </form>
     );
   }

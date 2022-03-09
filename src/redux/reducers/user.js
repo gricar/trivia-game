@@ -4,15 +4,13 @@ const INITIAL_STATE = {
   token: '',
 };
 
-const user = (state = INITIAL_STATE, action) => {
+const token = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SAVE_USER_TOKEN:
-    return {
-      token: action.userToken,
-    };
+    return action.userToken;
   default:
     return state;
   }
 };
 
-export default user;
+export default token;

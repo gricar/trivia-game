@@ -1,4 +1,4 @@
-import SAVE_TOKEN from '../actions';
+import { SAVE_TOKEN } from '../actions';
 
 const INITIAL_STATE = {
   token: '',
@@ -7,7 +7,9 @@ const INITIAL_STATE = {
 const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SAVE_TOKEN:
-    return action.token;
+    return {
+      token: action.token,
+    };
   default:
     return state;
   }

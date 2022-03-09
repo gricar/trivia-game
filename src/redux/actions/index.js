@@ -1,6 +1,6 @@
 import fetchToken from '../../services/fetchToken';
 
-const SAVE_TOKEN = 'SAVE_TOKEN';
+export const SAVE_TOKEN = 'SAVE_TOKEN';
 
 const saveToken = (token) => ({
   type: SAVE_TOKEN,
@@ -8,8 +8,8 @@ const saveToken = (token) => ({
 });
 
 const fetchTokenThunk = () => async (dispatch) => {
-  const response = await fetchToken();
-  dispatch(saveToken(response.token));
+  const token = await fetchToken();
+  dispatch(saveToken(token));
 };
 
 export default fetchTokenThunk;

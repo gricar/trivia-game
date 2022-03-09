@@ -26,8 +26,9 @@ class Login extends React.Component {
   }
 
   handleSumbit = () => {
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     dispatch(fetchTokenThunk());
+    history.push('/game');
   };
 
   render() {
@@ -72,4 +73,7 @@ export default connect()(Login);
 
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };

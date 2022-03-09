@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import fetchTokenThunk from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -21,6 +24,11 @@ class Login extends React.Component {
       [name]: value,
     }, this.validateEmail);
   }
+
+  handleSumbit = () => {
+    const { dispatch } = this.props;
+    dispatch(fetchTokenThunk());
+  };
 
   render() {
     const { login, email, isButtonDisabled } = this.state;
@@ -49,15 +57,19 @@ class Login extends React.Component {
 
         <button
           disabled={ isButtonDisabled }
-          type="submit"
+          type="button"
           data-testid="btn-play"
+          onClick={ this.handleSumbit }
         >
           Play
-
         </button>
       </form>
     );
   }
 }
 
-export default Login;
+export default connect()(Login);
+
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};

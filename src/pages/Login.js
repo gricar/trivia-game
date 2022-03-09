@@ -1,15 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setUser } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
-    login: '',
+    name: '',
     email: '',
     isButtonDisabled: true,
   }
 
   validateEmail = () => {
-    const { login, email } = this.state;
-    if (login.length > 0 && email.length > 0) {
+    const { name, email } = this.state;
+    if (name.length > 0 && email.length > 0) {
       this.setState({
         isButtonDisabled: false,
       });
@@ -23,20 +26,21 @@ class Login extends React.Component {
   }
 
   render() {
-    const { login, email, isButtonDisabled } = this.state;
+    const { name, email, isButtonDisabled } = this.state;
+    const { userToStore } = this.props;
     return (
       <form>
-        <label htmlFor="login">
+        <label htmlFor="name">
           Login:
           <input
             onChange={ this.handleInput }
             data-testid="input-player-name"
-            name="login"
+            name="name"
             type="text"
-            value={ login }
+            value={ name }
           />
         </label>
-        <label htmlFor="login">
+        <label htmlFor="name">
           email:
           <input
             onChange={ this.handleInput }
@@ -49,8 +53,9 @@ class Login extends React.Component {
 
         <button
           disabled={ isButtonDisabled }
-          type="submit"
+          type="button"
           data-testid="btn-play"
+          onClick={ () => userToStore(name, email) }
         >
           Play
 
@@ -60,4 +65,18 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  userToStore: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  userName: state.player.name,
+  userEmail: state.player.gravatarEmail,
+  userScore: state.player.score,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  userToStore: (name, email) => dispatch(setUser(name, email)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

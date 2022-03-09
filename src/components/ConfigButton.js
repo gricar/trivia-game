@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class Config extends React.Component {
+class ConfigButton extends React.Component {
   render() {
     return (
       <Link to="/config">
@@ -16,4 +16,4 @@ class Config extends React.Component {
   }
 }
 
-export default Config;
+export default ConfigButton;

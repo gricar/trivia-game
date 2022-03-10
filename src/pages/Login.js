@@ -28,10 +28,10 @@ class Login extends React.Component {
   }
 
   handleSumbit = () => {
-    const { getGame, history, userToStore } = this.props;
+    const { getToken, history, userToStore } = this.props;
     const { name, email } = this.state;
     userToStore(name, email);
-    getGame();
+    getToken();
     history.push('/game');
   };
 
@@ -41,8 +41,8 @@ class Login extends React.Component {
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
         <form>
-          <label htmlFor="login">
-            Login:
+          <label htmlFor="name">
+            Name:
             <input
               onChange={ this.handleInput }
               data-testid="input-player-name"
@@ -51,7 +51,7 @@ class Login extends React.Component {
               value={ name }
             />
           </label>
-          <label htmlFor="login">
+          <label htmlFor="email">
             email:
             <input
               onChange={ this.handleInput }
@@ -77,7 +77,7 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  getGame: PropTypes.func.isRequired,
+  getToken: PropTypes.func.isRequired,
   userToStore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -92,7 +92,7 @@ const mapStateToProps = ({ name, gravatarEmail, score }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   userToStore: (name, email) => dispatch(setUser(name, email)),
-  getGame: () => dispatch(fetchTokenThunk()),
+  getToken: () => dispatch(fetchTokenThunk()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

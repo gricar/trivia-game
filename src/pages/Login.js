@@ -85,10 +85,8 @@ Login.propTypes = {
   }).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  userName: state.player.name,
-  userEmail: state.player.gravatarEmail,
-  userScore: state.player.score,
+const mapStateToProps = ({ player: { name, gravatarEmail, score } }) => ({
+  name, gravatarEmail, score,
 });
 
 const mapDispatchToProps = (dispatch) => ({

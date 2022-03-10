@@ -30,7 +30,6 @@ class Login extends React.Component {
   handleSumbit = () => {
     const { getGame, history, userToStore } = this.props;
     const { name, email } = this.state;
-    console.log(name, email);
     userToStore(name, email);
     getGame();
     history.push('/game');

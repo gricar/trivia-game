@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import fetchTokenThunk, { setUser } from '../redux/actions';
 import logo from '../trivia.png';
 import ConfigButton from '../components/ConfigButton';
-import Header from '../components/Header';
 
 class Login extends React.Component {
   state = {
@@ -41,7 +40,6 @@ class Login extends React.Component {
     const { name, email, isButtonDisabled } = this.state;
     return (
       <header className="App-header">
-        <Header />
         <img src={ logo } className="App-logo" alt="logo" />
         <form>
           <label htmlFor="login">

@@ -5,12 +5,12 @@ import getGravatarUrl from '../services/getGravatarUrls';
 
 class Header extends React.Component {
   render() {
-    const { name, email, score } = this.props;
+    const { name, gravatarEmail, score } = this.props;
     return (
       <div className="header-content">
         <img
           data-testid="header-profile-picture"
-          src={ getGravatarUrl(email) }
+          src={ getGravatarUrl(gravatarEmail) }
           alt="Gravatar"
         />
         <p data-testid="header-player-name">
@@ -28,12 +28,14 @@ class Header extends React.Component {
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
   score: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = ({ player: { name, gravatarEmail, score } }) => ({
-  name, gravatarEmail, score,
+  name,
+  gravatarEmail,
+  score,
 });
 
 export default connect(mapStateToProps)(Header);

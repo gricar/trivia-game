@@ -86,7 +86,9 @@ Login.propTypes = {
 };
 
 const mapStateToProps = ({ player: { name, gravatarEmail, score } }) => ({
-  name, gravatarEmail, score,
+  name,
+  gravatarEmail,
+  score,
 });
 
 const mapDispatchToProps = (dispatch) => ({

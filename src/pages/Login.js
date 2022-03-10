@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import fetchTokenThunk from '../redux/actions';
 import logo from '../trivia.png';
 import ConfigButton from '../components/ConfigButton';
 
@@ -23,6 +26,12 @@ class Login extends React.Component {
       [name]: value,
     }, this.validateEmail);
   }
+
+  handleSumbit = () => {
+    const { dispatch, history } = this.props;
+    dispatch(fetchTokenThunk());
+    history.push('/game');
+  };
 
   render() {
     const { login, email, isButtonDisabled } = this.state;
@@ -53,11 +62,11 @@ class Login extends React.Component {
 
           <button
             disabled={ isButtonDisabled }
-            type="submit"
+            type="button"
             data-testid="btn-play"
+            onClick={ this.handleSumbit }
           >
             Play
-
           </button>
         </form>
         <ConfigButton />
@@ -66,4 +75,11 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default connect()(Login);
+
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};

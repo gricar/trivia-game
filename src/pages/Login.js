@@ -1,20 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import fetchTokenThunk from '../redux/actions';
+import fetchTokenThunk, { setUser } from '../redux/actions';
 import logo from '../trivia.png';
 import ConfigButton from '../components/ConfigButton';
 
 class Login extends React.Component {
   state = {
-    login: '',
+    name: '',
     email: '',
     isButtonDisabled: true,
   }
 
   validateEmail = () => {
-    const { login, email } = this.state;
-    if (login.length > 0 && email.length > 0) {
+    const { name, email } = this.state;
+    if (name.length > 0 && email.length > 0) {
       this.setState({
         isButtonDisabled: false,
       });
@@ -28,13 +28,14 @@ class Login extends React.Component {
   }
 
   handleSumbit = () => {
-    const { dispatch, history } = this.props;
+    const { dispatch, history, name, email, userToStore } = this.props;
+    userToStore(name, email);
     dispatch(fetchTokenThunk());
     history.push('/game');
   };
 
   render() {
-    const { login, email, isButtonDisabled } = this.state;
+    const { name, email, isButtonDisabled } = this.state;
     return (
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
@@ -44,9 +45,9 @@ class Login extends React.Component {
             <input
               onChange={ this.handleInput }
               data-testid="input-player-name"
-              name="login"
+              name="name"
               type="text"
-              value={ login }
+              value={ name }
             />
           </label>
           <label htmlFor="login">
@@ -75,11 +76,24 @@ class Login extends React.Component {
   }
 }
 
-export default connect()(Login);
-
 Login.propTypes = {
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
+  userToStore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  userName: state.player.name,
+  userEmail: state.player.gravatarEmail,
+  userScore: state.player.score,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  userToStore: (name, email) => dispatch(setUser(name, email)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

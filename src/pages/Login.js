@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import fetchTokenThunk, { setUser } from '../redux/actions';
 import logo from '../trivia.png';
 import ConfigButton from '../components/ConfigButton';
+import Header from '../components/Header';
 
 class Login extends React.Component {
   state = {
@@ -28,9 +29,9 @@ class Login extends React.Component {
   }
 
   handleSumbit = () => {
-    const { dispatch, history, name, email, userToStore } = this.props;
+    const { getGame, history, name, email, userToStore } = this.props;
     userToStore(name, email);
-    dispatch(fetchTokenThunk());
+    getGame();
     history.push('/game');
   };
 
@@ -38,6 +39,7 @@ class Login extends React.Component {
     const { name, email, isButtonDisabled } = this.state;
     return (
       <header className="App-header">
+        <Header />
         <img src={ logo } className="App-logo" alt="logo" />
         <form>
           <label htmlFor="login">
@@ -60,7 +62,6 @@ class Login extends React.Component {
               value={ email }
             />
           </label>
-
           <button
             disabled={ isButtonDisabled }
             type="button"
@@ -79,7 +80,7 @@ class Login extends React.Component {
 Login.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  dispatch: PropTypes.func.isRequired,
+  getGame: PropTypes.func.isRequired,
   userToStore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -94,6 +95,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   userToStore: (name, email) => dispatch(setUser(name, email)),
+  getGame: () => dispatch(fetchTokenThunk()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

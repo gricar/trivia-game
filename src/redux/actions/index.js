@@ -15,6 +15,7 @@ export const fetchTokenThunk = () => async (dispatch) => {
   const userToken = await fetchToken();
   dispatch(saveToken(userToken));
   saveInLocalStorage(userToken);
+  return userToken;
 };
 
 export const setUser = (name, email) => ({
@@ -34,6 +35,9 @@ export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
   const requestAPI = await fetchQuestionsAndAnswers(token);
   if (requestAPI.response_code === 0) {
     dispatch(saveResults(requestAPI.results));
+  } else {
+    const newToken = fetchTokenThunk();
+    dispatch(fetchQuestionsAndAnswersThunk(newToken));
   }
   return requestAPI;
 };

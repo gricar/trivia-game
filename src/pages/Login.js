@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchTokenThunk, setUser } from '../redux/actions';
+import { setUser, fetchTokenThunk } from '../redux/actions';
 import logo from '../trivia.png';
 import ConfigButton from '../components/ConfigButton';
 
@@ -27,11 +27,11 @@ class Login extends React.Component {
     }, this.validateEmail);
   }
 
-  handleSumbit = () => {
+  handleSumbit = async () => {
     const { getToken, history, userToStore } = this.props;
     const { name, email } = this.state;
     userToStore(name, email);
-    getToken();
+    await getToken();
     history.push('/game');
   };
 

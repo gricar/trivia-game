@@ -84,7 +84,7 @@ Login.propTypes = {
   }).isRequired,
 };
 
-const mapStateToProps = ({ name, gravatarEmail, score }) => ({
+const mapStateToProps = ({ player: { name, gravatarEmail, score } }) => ({
   name,
   gravatarEmail,
   score,

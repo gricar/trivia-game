@@ -32,7 +32,7 @@ Header.propTypes = {
   score: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ name, gravatarEmail, score }) => ({
+const mapStateToProps = ({ player: { name, gravatarEmail, score } }) => ({
   name,
   gravatarEmail,
   score,

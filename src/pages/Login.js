@@ -28,10 +28,9 @@ class Login extends React.Component {
   }
 
   handleSumbit = () => {
-    // const { dispatch, history } = this.props;
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     dispatch(fetchTokenThunk());
-    // history.push('/game');
+    history.push('/game');
   };
 
   render() {

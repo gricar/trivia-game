@@ -29,7 +29,9 @@ class Login extends React.Component {
   }
 
   handleSumbit = () => {
-    const { getGame, history, name, email, userToStore } = this.props;
+    const { getGame, history, userToStore } = this.props;
+    const { name, email } = this.state;
+    console.log(name, email);
     userToStore(name, email);
     getGame();
     history.push('/game');
@@ -78,8 +80,6 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
   getGame: PropTypes.func.isRequired,
   userToStore: PropTypes.func.isRequired,
   history: PropTypes.shape({

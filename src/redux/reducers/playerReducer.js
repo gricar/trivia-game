@@ -1,4 +1,4 @@
-import { SET_USER, SAVE_USER_TOKEN } from '../actions';
+import { SET_USER, SAVE_USER_TOKEN, SAVE_RESULTS } from '../actions';
 
 const INITIAL_STATE = {
   player: {
@@ -8,6 +8,7 @@ const INITIAL_STATE = {
     gravatarEmail: '',
   },
   hasToken: false,
+  results: [],
 };
 
 const playerReducer = (state = INITIAL_STATE, action) => {
@@ -25,6 +26,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       ...state,
       token: action.userToken,
       hasToken: true,
+    };
+  case SAVE_RESULTS:
+    return {
+      ...state,
+      results: action.payload,
     };
   default:
     return state;

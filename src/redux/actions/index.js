@@ -4,6 +4,7 @@ import { saveInLocalStorage } from '../../services/localStorage';
 
 export const SET_USER = 'SET_USER';
 export const SAVE_USER_TOKEN = 'SAVE_USER_TOKEN';
+export const SAVE_RESULTS = 'SAVE_RESULTS';
 
 export const saveToken = (userToken) => ({
   type: SAVE_USER_TOKEN,
@@ -16,10 +17,6 @@ export const fetchTokenThunk = () => async (dispatch) => {
   saveInLocalStorage(userToken);
 };
 
-export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
-  const questionsAndAnswers = await fetchQuestionsAndAnswers(token);
-};
-
 export const setUser = (name, email) => ({
   type: SET_USER,
   payload: {
@@ -28,4 +25,15 @@ export const setUser = (name, email) => ({
   },
 });
 
-export default fetchTokenThunk;
+const saveResults = (results) => ({
+  type: SAVE_RESULTS,
+  payload: results,
+});
+
+export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
+  const requestAPI = await fetchQuestionsAndAnswers(token);
+  if (requestAPI.response_code === 0) {
+    dispatch(saveResults(requestAPI.results));
+  }
+  return requestAPI;
+};

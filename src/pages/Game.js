@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import fetchQuestionsAndAnswers from '../services/fetchQuestionsAndAnswers';
+import GameCard from '../components/GameCard';
 
 class Game extends React.Component {
   // state = {
@@ -13,11 +14,12 @@ class Game extends React.Component {
     const { token } = this.props;
     const questionsResponse = await fetchQuestionsAndAnswers(token);
     const results = questionsResponse.results
-      .map(({ question, correct_answer, incorrect_answers }) => ({
-        question,
-        aswers: [
-          { correct: true, content: correct_answer },
-          { correct: false, content: incorrect_answers },
+      .map((question) => ({
+        question: question.question,
+        category: question.category,
+        answers: [
+          { correct: true, content: question.correct_answer },
+          { correct: false, content: question.incorrect_answers },
         ],
       }));
     console.log(results);
@@ -25,7 +27,10 @@ class Game extends React.Component {
 
   render() {
     return (
-      <Header />
+      <>
+        <Header />
+        <GameCard />
+      </>
     );
   }
 }

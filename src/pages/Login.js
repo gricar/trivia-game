@@ -1,20 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import fetchTokenThunk from '../redux/actions';
+import fetchTokenThunk, { setUser } from '../redux/actions';
 import logo from '../trivia.png';
 import ConfigButton from '../components/ConfigButton';
 
 class Login extends React.Component {
   state = {
-    login: '',
+    name: '',
     email: '',
     isButtonDisabled: true,
   }
 
   validateEmail = () => {
-    const { login, email } = this.state;
-    if (login.length > 0 && email.length > 0) {
+    const { name, email } = this.state;
+    if (name.length > 0 && email.length > 0) {
       this.setState({
         isButtonDisabled: false,
       });
@@ -28,13 +28,15 @@ class Login extends React.Component {
   }
 
   handleSumbit = () => {
-    const { dispatch, history } = this.props;
-    dispatch(fetchTokenThunk());
+    const { getGame, history, userToStore } = this.props;
+    const { name, email } = this.state;
+    userToStore(name, email);
+    getGame();
     history.push('/game');
   };
 
   render() {
-    const { login, email, isButtonDisabled } = this.state;
+    const { name, email, isButtonDisabled } = this.state;
     return (
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
@@ -44,9 +46,9 @@ class Login extends React.Component {
             <input
               onChange={ this.handleInput }
               data-testid="input-player-name"
-              name="login"
+              name="name"
               type="text"
-              value={ login }
+              value={ name }
             />
           </label>
           <label htmlFor="login">
@@ -59,7 +61,6 @@ class Login extends React.Component {
               value={ email }
             />
           </label>
-
           <button
             disabled={ isButtonDisabled }
             type="button"
@@ -75,11 +76,23 @@ class Login extends React.Component {
   }
 }
 
-export default connect()(Login);
-
 Login.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  getGame: PropTypes.func.isRequired,
+  userToStore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
 };
+
+const mapStateToProps = ({ name, gravatarEmail, score }) => ({
+  name,
+  gravatarEmail,
+  score,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  userToStore: (name, email) => dispatch(setUser(name, email)),
+  getGame: () => dispatch(fetchTokenThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

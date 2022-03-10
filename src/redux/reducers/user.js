@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 const token = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SAVE_USER_TOKEN:
-    return action.userToken;
+    return { ...state, token: action.userToken };
   default:
     return state;
   }

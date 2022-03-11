@@ -2,6 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class GameCard extends React.Component {
+  componentDidUpdate() {
+    const correctAnswer = document.querySelector('.correctAnswer');
+    const incorrectAnswers = document.querySelectorAll('.incorrectAnswer');
+    correctAnswer.className = 'answer';
+    incorrectAnswers.forEach((element) => { element.className = 'answer'; });
+  }
+
   trueOrFalse = (element) => (element.correctness === true
     ? 'correct-answer'
     : `wrong-answer-${element.index}`)
@@ -23,7 +30,6 @@ class GameCard extends React.Component {
     const { incorrectAnswers, correctAnswer } = questions;
     const allAnswers = incorrectAnswers.concat(correctAnswer)
       .sort(() => Math.random() - ZERO_FIVE); // concatenar as perguntas e randomiza-las.
-    console.log(allAnswers);
     return (
       <div className="game-card">
         <h3 data-testid="question-category">{ questions.category}</h3>

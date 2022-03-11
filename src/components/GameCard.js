@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class GameCard extends React.Component {
+  componentDidUpdate() {
+    const correctAnswer = document.querySelector('.correctAnswer');
+    const incorrectAnswers = document.querySelectorAll('.incorrectAnswer');
+    correctAnswer.className = 'answer';
+    incorrectAnswers.forEach((element) => { element.className = 'answer'; });
+  }
+
   trueOrFalse = (element) => (element.correctness === true
     ? 'correct-answer'
     : `wrong-answer-${element.index}`)

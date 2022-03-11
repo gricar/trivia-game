@@ -25,6 +25,13 @@ class Game extends React.Component {
     })); // lint nao permite usar numeros, eis a solucao: tranformar de numero para string, string para numero, somar, de volta para string. elegante?
   }
 
+  randomizeColor = (questionsToBeRandomized) => {
+    const ZERO_FIVE = 0.5; // NO MAGIC NUMBERS
+    const { incorrectAnswers, correctAnswer } = questionsToBeRandomized;
+    return incorrectAnswers.concat(correctAnswer)
+      .sort(() => Math.random() - ZERO_FIVE); // concatenar as perguntas e randomiza-las.
+  }
+
   // controle de qual card (perguntas e respostas) sera renderizado
   renderProperCard = () => {
     const { renderingCard } = this.state;
@@ -36,15 +43,15 @@ class Game extends React.Component {
       // this.state.renderingcard controlara a renderizacao
       switch (renderingCard) {
       case NUMBERS[0]:
-        return <GameCard questions={ questions[0] } />;
+        return <GameCard randomizedQuestions={ this.randomizeColor(questions[0]) } />;
       case NUMBERS[1]:
-        return <GameCard questions={ questions[1] } />;
+        return <GameCard randomizedQuestions={ this.randomizeColor(questions[1]) } />;
       case NUMBERS[2]:
-        return <GameCard questions={ questions[2] } />;
+        return <GameCard randomizedQuestions={ this.randomizeColor(questions[2]) } />;
       case NUMBERS[3]:
-        return <GameCard questions={ questions[3] } />;
+        return <GameCard randomizedQuestions={ this.randomizeColor(questions[3]) } />;
       case NUMBERS[4]:
-        return <GameCard questions={ questions[4] } />;
+        return <GameCard randomizedQuestions={ this.randomizeColor(questions[4]) } />;
       default:
         return null;
       }

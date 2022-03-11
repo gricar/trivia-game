@@ -6,6 +6,14 @@ class GameCard extends React.Component {
     ? 'correct-answer'
     : `wrong-answer-${element.index}`)
 
+  handleClickInAnswer = ({ target }) => {
+    if (target.name === 'correct-answer') {
+      target.className = 'correctAnswer';
+    } else {
+      target.className = 'incorrectAnswer';
+    }
+  };
+
   render() {
     const ZERO_FIVE = 0.5; // NO MAGIC NUMBERS
     const { questions } = this.props;
@@ -21,8 +29,10 @@ class GameCard extends React.Component {
           { allAnswers.map((el, index) => (
             <button
               data-testid={ this.trueOrFalse(el, index) }
+              name={ this.trueOrFalse(el, index) }
               type="button"
               key={ index }
+              onClick={ this.handleClickInAnswer }
             >
               {el.content}
             </button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Timer extends React.Component {
   state = {
@@ -10,6 +11,13 @@ class Timer extends React.Component {
     setInterval(() => this.countdown(), ONE_SECOND);
   }
 
+  componentDidUpdate(prevProps) {
+    const { btnClicked } = this.props;
+    if (btnClicked !== prevProps.btnClicked) {
+      this.resetTimer();
+    }
+  }
+
   countdown = () => {
     const { timeInSec } = this.state;
     if (timeInSec > 0) {
@@ -17,6 +25,12 @@ class Timer extends React.Component {
         timeInSec: prevState.timeInSec - 1,
       }));
     }
+  }
+
+  resetTimer = () => {
+    this.setState(() => ({
+      timeInSec: 30,
+    }));
   }
 
   render() {
@@ -28,5 +42,9 @@ class Timer extends React.Component {
     );
   }
 }
+
+Timer.propTypes = {
+  btnClicked: PropTypes.bool.isRequired,
+};
 
 export default Timer;

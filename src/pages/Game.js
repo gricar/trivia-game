@@ -9,6 +9,7 @@ import Timer from '../components/Timer';
 class Game extends React.Component {
   state = {
     renderingCard: '0',
+    btnClicked: false,
   }
 
   // busca as respostas utilizando o token salvo na store
@@ -18,7 +19,10 @@ class Game extends React.Component {
   }
 
   nextQuestion = () => {
-    this.setState((state) => ({ renderingCard: `${Number(state.renderingCard) + 1}` })); // lint nao permite usar numeros, eis a solucao: tranformar de numero para string, string para numero, somar, de volta para string. elegante?
+    this.setState((state) => ({
+      renderingCard: `${Number(state.renderingCard) + 1}`,
+      btnClicked: !state.btnClicked,
+    })); // lint nao permite usar numeros, eis a solucao: tranformar de numero para string, string para numero, somar, de volta para string. elegante?
   }
 
   // controle de qual card (perguntas e respostas) sera renderizado
@@ -48,6 +52,7 @@ class Game extends React.Component {
   }
 
   render() {
+    const { btnClicked } = this.state;
     return (
       <>
         <Header />
@@ -55,7 +60,7 @@ class Game extends React.Component {
           { this.renderProperCard() }
         </div>
         <button type="button" onClick={ this.nextQuestion }>next</button>
-        <Timer />
+        <Timer btnClicked={ btnClicked } />
       </>
     );
   }

@@ -3,22 +3,32 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './GameCard.css';
 
+const BACKGROUND_RED = 'background-red';
+const BACKGROUND_GREEN = 'background-green';
 class GameCard extends React.Component {
   setDatatestId = (element) => (element.correctness === true
     ? 'correct-answer'
     : `wrong-answer-${element.index}`)
 
-  checkCorrectness = (buttonElement) => {
-    // const { saveScore } = this.props;
-    // if (correctness === true) {
-    // // saveScore(time);
-    // }
-    const { target: { dataset: { correctness } } } = buttonElement;
-
-    if (correctness === 'true') {
-      buttonElement.target.classList.add('background-green');
+    paintButtons = () => {
+      const buttons = document.querySelectorAll('.answers');
+      buttons.forEach((element) => {
+        if (element.dataset.correctness === 'false') {
+          element.classList.add(BACKGROUND_RED);
+        } else {
+          element.classList.add(BACKGROUND_GREEN);
+        }
+      });
     }
-  }
+
+      checkCorrectness = () => {
+        // const { target: { dataset: { correctness } } } = buttonElement;
+        // const { saveScore } = this.props;
+        // if (correctness === 'true') {
+        // // saveScore(time);
+        // }
+        this.paintButtons();
+      };
 
   componentDidUpdate = (prevProps) => {
     const { randomizedQuestions } = this.props;
@@ -26,8 +36,8 @@ class GameCard extends React.Component {
       && randomizedQuestions !== undefined) {
       const el = document.querySelectorAll('.answers');
       el.forEach((element) => {
-        element.classList.remove('background-red');
-        element.classList.remove('background-green');
+        element.classList.remove(BACKGROUND_RED);
+        element.classList.remove(BACKGROUND_GREEN);
       });
     }
   }
@@ -63,10 +73,9 @@ class GameCard extends React.Component {
 }
 
 GameCard.propTypes = {
-  randomizedQuestions: PropTypes.objectOf(Object).isRequired,
+  randomizedQuestions: PropTypes.arrayOf(Object).isRequired,
   hasTimerExpired: PropTypes.bool.isRequired,
   questions: PropTypes.PropTypes.objectOf(Object).isRequired,
-  buttonClass: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = ({ hasTimerExpired, buttonClass }) => ({

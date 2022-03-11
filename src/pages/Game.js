@@ -2,34 +2,55 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import fetchQuestionsAndAnswers from '../services/fetchQuestionsAndAnswers';
+import { fetchQuestionsAndAnswersThunk } from '../redux/actions';
 import GameCard from '../components/GameCard';
 
 class Game extends React.Component {
-  // state = {
-  //   results: [],
-  // }
+  state = {
+    renderingCard: 0,
+  }
 
-  componentDidMount= async () => {
-    const { token } = this.props;
-    const questionsResponse = await fetchQuestionsAndAnswers(token);
-    const results = questionsResponse.results
-      .map((question) => ({
-        question: question.question,
-        category: question.category,
-        answers: [
-          { correct: true, content: question.correct_answer },
-          { correct: false, content: question.incorrect_answers },
-        ],
-      }));
-    console.log(results);
+  componentDidMount = async () => {
+    const { token, getQuestionsAndAnswers } = this.props;
+    getQuestionsAndAnswers(token);
+  }
+
+  nextQuestion = () => {
+    this.setState((state) => ({ renderingCard: state.renderingCard + 1 }));
+  }
+
+  renderProperCard = () => {
+    const { renderingCard } = this.state;
+    const { questions } = this.props;
+
+    if (questions.length > 0) {
+      const NUMBERS = ['0', '1', '2', '3', '4'];
+
+      switch (renderingCard) {
+      case NUMBERS[0]:
+        return <GameCard questions={ questions[0] } />;
+      case NUMBERS[1]:
+        return <GameCard questions={ questions[1] } />;
+      case NUMBERS[2]:
+        return <GameCard questions={ questions[2] } />;
+      case NUMBERS[3]:
+        return <GameCard questions={ questions[3] } />;
+      case NUMBERS[4]:
+        return <GameCard questions={ questions[4] } />;
+      default:
+        return null;
+      }
+    }
   }
 
   render() {
     return (
       <>
         <Header />
-        <GameCard />
+        <div>
+          { this.renderProperCard() }
+        </div>
+        <button type="button" onClick={ this.nextQuestion }>next</button>
       </>
     );
   }
@@ -37,11 +58,18 @@ class Game extends React.Component {
 
 Game.propTypes = {
   token: PropTypes.string.isRequired,
+  getQuestionsAndAnswers: PropTypes.func.isRequired,
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const mapStateToProps = ({ hasToken, token }) => ({
+const mapStateToProps = ({ hasToken, token, questions }) => ({
   hasToken,
   token,
+  questions,
 });
 
-export default connect(mapStateToProps)(Game);
+const mapDispatchToProps = (dispatch) => ({
+  getQuestionsAndAnswers: (token) => dispatch(fetchQuestionsAndAnswersThunk(token)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

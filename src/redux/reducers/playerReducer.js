@@ -7,8 +7,8 @@ const INITIAL_STATE = {
     score: '',
     gravatarEmail: '',
   },
-  hasToken: false,
-  results: [],
+  token: '',
+  questions: [],
 };
 
 const playerReducer = (state = INITIAL_STATE, action) => {
@@ -25,12 +25,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       token: action.userToken,
-      hasToken: true,
     };
   case SAVE_RESULTS:
     return {
       ...state,
-      results: action.payload,
+      questions: action.payload,
     };
   default:
     return state;

@@ -32,12 +32,24 @@ const saveResults = (results) => ({
 });
 
 export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
+  const THREE = 3;
   const requestAPI = await fetchQuestionsAndAnswers(token);
-  if (requestAPI.response_code === 0) {
-    dispatch(saveResults(requestAPI.results));
-  } else {
-    const newToken = fetchTokenThunk();
+  if (requestAPI.response_code === THREE) {
+    const newToken = await fetchToken();
     dispatch(fetchQuestionsAndAnswersThunk(newToken));
+  }
+  if (requestAPI.response_code === 0) {
+    const questions = requestAPI.results.map((question) => ({
+      question: question.question,
+      category: question.category,
+      correctAnswer: [{ correctness: true, content: question.correct_answer }],
+      incorrectAnswers: question.incorrect_answers.map((incorrectElement, index) => ({
+        correctness: false,
+        content: incorrectElement,
+        index,
+      })),
+    }));
+    dispatch(saveResults(questions));
   }
   return requestAPI;
 };

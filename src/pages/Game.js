@@ -43,15 +43,30 @@ class Game extends React.Component {
       // this.state.renderingcard controlara a renderizacao
       switch (renderingCard) {
       case NUMBERS[0]:
-        return <GameCard randomizedQuestions={ this.randomizeColor(questions[0]) } />;
+        return (<GameCard
+          questions={ questions }
+          randomizedQuestions={ this.randomizeColor(questions[0]) }
+        />);
       case NUMBERS[1]:
-        return <GameCard randomizedQuestions={ this.randomizeColor(questions[1]) } />;
+        return (<GameCard
+          questions={ questions }
+          randomizedQuestions={ this.randomizeColor(questions[1]) }
+        />);
       case NUMBERS[2]:
-        return <GameCard randomizedQuestions={ this.randomizeColor(questions[2]) } />;
+        return (<GameCard
+          questions={ questions }
+          randomizedQuestions={ this.randomizeColor(questions[2]) }
+        />);
       case NUMBERS[3]:
-        return <GameCard randomizedQuestions={ this.randomizeColor(questions[3]) } />;
+        return (<GameCard
+          questions={ questions }
+          randomizedQuestions={ this.randomizeColor(questions[3]) }
+        />);
       case NUMBERS[4]:
-        return <GameCard randomizedQuestions={ this.randomizeColor(questions[4]) } />;
+        return (<GameCard
+          questions={ questions }
+          randomizedQuestions={ this.randomizeColor(questions[4]) }
+        />);
       default:
         return null;
       }

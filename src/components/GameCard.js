@@ -16,7 +16,12 @@ class GameCard extends React.Component {
     ? 'correct-answer'
     : `wrong-answer-${element.index}`)
 
-  handleClickInAnswer = () => {
+  checkCorrectness = (el) => {
+    console.log(el.target.dataset.correctness);
+  }
+
+  handleClickInAnswer = (el) => {
+    this.checkCorrectness(el);
     const arr = document.querySelectorAll('.answer');
     arr.forEach((element) => {
       if (element.name === 'correct-answer') {
@@ -28,11 +33,11 @@ class GameCard extends React.Component {
   };
 
   render() {
-    const { hasTimerExpired, randomizedQuestions } = this.props;
+    const { hasTimerExpired, randomizedQuestions, questions } = this.props;
     return (
       <div className="game-card">
-        <h3 data-testid="question-category">{ randomizedQuestions.category}</h3>
-        <h3 data-testid="question-text">{randomizedQuestions.question}</h3>
+        <h3 data-testid="question-category">{ questions.category}</h3>
+        <h3 data-testid="question-text">{questions.question}</h3>
         <div data-testid="answer-options">
           { randomizedQuestions.map((el, index) => (
             <button
@@ -43,6 +48,7 @@ class GameCard extends React.Component {
               key={ index }
               disabled={ hasTimerExpired }
               onClick={ this.handleClickInAnswer }
+              data-correctness={ el.correctness }
             >
               {el.content}
             </button>
@@ -56,6 +62,7 @@ class GameCard extends React.Component {
 GameCard.propTypes = {
   randomizedQuestions: PropTypes.objectOf(Object).isRequired,
   hasTimerExpired: PropTypes.bool.isRequired,
+  questions: PropTypes.PropTypes.objectOf(Object).isRequired,
 };
 
 const mapStateToProps = ({ hasTimerExpired }) => ({

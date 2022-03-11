@@ -7,7 +7,7 @@ import GameCard from '../components/GameCard';
 
 class Game extends React.Component {
   state = {
-    renderingCard: 0,
+    renderingCard: '0',
   }
 
   componentDidMount = async () => {

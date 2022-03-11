@@ -1,4 +1,4 @@
-import { SET_USER, SAVE_USER_TOKEN, SAVE_RESULTS } from '../actions';
+import { SET_USER, SAVE_USER_TOKEN, SAVE_RESULTS, TIMER_EXPIRED } from '../actions';
 
 const INITIAL_STATE = {
   player: {
@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   },
   token: '',
   questions: [],
+  hasTimerExpired: false,
 };
 
 const playerReducer = (state = INITIAL_STATE, action) => {
@@ -30,6 +31,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       questions: action.payload,
+    };
+  case TIMER_EXPIRED:
+    return {
+      ...state,
+      hasTimerExpired: action.payload,
     };
   default:
     return state;

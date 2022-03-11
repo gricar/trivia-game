@@ -55,7 +55,7 @@ export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
   return requestAPI;
 };
 
-export const setTimer = (hasExpired) => ({
+export const setTimerExpired = (hasExpired) => ({
   type: TIMER_EXPIRED,
   payload: hasExpired,
 });

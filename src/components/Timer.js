@@ -11,9 +11,8 @@ class Timer extends React.Component {
   }
 
   countdown = () => {
-    console.log('entrou');
     const { timeInSec } = this.state;
-    if (timeInSec > 25) {
+    if (timeInSec > 0) {
       this.setState((prevState) => ({
         timeInSec: prevState.timeInSec - 1,
       }));

@@ -12,7 +12,6 @@ class GameCard extends React.Component {
     const { incorrectAnswers, correctAnswer } = questions;
     const allAnswers = incorrectAnswers.concat(correctAnswer)
       .sort(() => Math.random() - ZERO_FIVE); // concatenar as perguntas e randomiza-las.
-    console.log(allAnswers);
     return (
       <div className="game-card">
         <h3 data-testid="question-category">{ questions.category}</h3>

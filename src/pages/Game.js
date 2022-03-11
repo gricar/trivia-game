@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { fetchQuestionsAndAnswersThunk } from '../redux/actions';
 import GameCard from '../components/GameCard';
+import Timer from '../components/Timer';
 
 class Game extends React.Component {
   state = {
@@ -54,6 +55,7 @@ class Game extends React.Component {
           { this.renderProperCard() }
         </div>
         <button type="button" onClick={ this.nextQuestion }>next</button>
+        <Timer />
       </>
     );
   }

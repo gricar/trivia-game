@@ -10,22 +10,25 @@ class Game extends React.Component {
     renderingCard: '0',
   }
 
+  // busca as respostas utilizando o token salvo na store
   componentDidMount = async () => {
     const { token, getQuestionsAndAnswers } = this.props;
     getQuestionsAndAnswers(token);
   }
 
   nextQuestion = () => {
-    this.setState((state) => ({ renderingCard: state.renderingCard + 1 }));
+    this.setState((state) => ({ renderingCard: `${Number(state.renderingCard) + 1}` })); // lint nao permite usar numeros, eis a solucao: tranformar de numero para string, string para numero, somar, de volta para string. elegante?
   }
 
+  // controle de qual card (perguntas e respostas) sera renderizado
   renderProperCard = () => {
     const { renderingCard } = this.state;
     const { questions } = this.props;
 
     if (questions.length > 0) {
-      const NUMBERS = ['0', '1', '2', '3', '4'];
+      const NUMBERS = ['0', '1', '2', '3', '4']; // NO MAGIC NUMBERS
 
+      // this.state.renderingcard controlara a renderizacao
       switch (renderingCard) {
       case NUMBERS[0]:
         return <GameCard questions={ questions[0] } />;

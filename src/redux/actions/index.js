@@ -32,14 +32,14 @@ const saveResults = (results) => ({
 });
 
 export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
-  const THREE = 3;
-  const requestAPI = await fetchQuestionsAndAnswers(token);
-  if (requestAPI.response_code === THREE) {
+  const THREE = 3; // NO MAGIC NUMBERS
+  const requestAPI = await fetchQuestionsAndAnswers(token); // usa token salvo para buscar Q&As
+  if (requestAPI.response_code === THREE) { // response_code = 3 significa token expirado
     const newToken = await fetchToken();
-    dispatch(fetchQuestionsAndAnswersThunk(newToken));
+    dispatch(fetchQuestionsAndAnswersThunk(newToken)); // entao renova token e faz nova requisicao
   }
   if (requestAPI.response_code === 0) {
-    const questions = requestAPI.results.map((question) => ({
+    const questions = requestAPI.results.map((question) => ({ // percorre o array vindo da requisicao
       question: question.question,
       category: question.category,
       correctAnswer: [{ correctness: true, content: question.correct_answer }],
@@ -47,7 +47,7 @@ export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
         correctness: false,
         content: incorrectElement,
         index,
-      })),
+      })), // montando novo objeto para facilitar manipulacao posterior, incluindo index incremental apenas para respostas incorretas.
     }));
     dispatch(saveResults(questions));
   }

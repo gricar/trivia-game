@@ -2,6 +2,8 @@ import fetchToken from '../../services/fetchToken';
 import fetchQuestionsAndAnswers from '../../services/fetchQuestionsAndAnswers';
 import { saveInLocalStorage } from '../../services/localStorage';
 
+export const TEN = 10;
+export const SET_SCORE = 'SET_SCORE';
 export const SET_USER = 'SET_USER';
 export const SAVE_USER_TOKEN = 'SAVE_USER_TOKEN';
 export const SAVE_RESULTS = 'SAVE_RESULTS';
@@ -58,4 +60,9 @@ export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
 export const setTimerExpired = (hasExpired) => ({
   type: TIMER_EXPIRED,
   payload: hasExpired,
+});
+
+export const setScore = (timeInSec, dificulty) => ({
+  type: SET_SCORE,
+  payload: TEN + (timeInSec * dificulty),
 });

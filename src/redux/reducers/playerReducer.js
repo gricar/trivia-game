@@ -1,4 +1,9 @@
-import { SET_USER, SAVE_USER_TOKEN, SAVE_RESULTS, TIMER_EXPIRED } from '../actions';
+import {
+  SET_USER,
+  SAVE_USER_TOKEN,
+  SAVE_RESULTS,
+  TIMER_EXPIRED,
+  SET_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   player: {
@@ -37,6 +42,12 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       ...state,
       hasTimerExpired: action.payload,
     };
+  case SET_SCORE:
+    return {
+      ...state,
+      currentScore: state.currentScore + action.payload,
+    };
+
   default:
     return state;
   }

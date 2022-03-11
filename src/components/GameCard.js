@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class GameCard extends React.Component {
   trueOrFalse = (element) => (element.correctness === true
@@ -19,11 +20,10 @@ class GameCard extends React.Component {
 
   render() {
     const ZERO_FIVE = 0.5; // NO MAGIC NUMBERS
-    const { questions } = this.props;
+    const { questions, hasTimerExpired } = this.props;
     const { incorrectAnswers, correctAnswer } = questions;
     const allAnswers = incorrectAnswers.concat(correctAnswer)
       .sort(() => Math.random() - ZERO_FIVE); // concatenar as perguntas e randomiza-las.
-    console.log(allAnswers);
     return (
       <div className="game-card">
         <h3 data-testid="question-category">{ questions.category}</h3>
@@ -36,6 +36,7 @@ class GameCard extends React.Component {
               name={ this.trueOrFalse(el, index) }
               type="button"
               key={ index }
+              disabled={ hasTimerExpired }
               onClick={ this.handleClickInAnswer }
             >
               {el.content}
@@ -49,6 +50,11 @@ class GameCard extends React.Component {
 
 GameCard.propTypes = {
   questions: PropTypes.objectOf(Object).isRequired,
+  hasTimerExpired: PropTypes.bool.isRequired,
 };
 
-export default GameCard;
+const mapStateToProps = ({ hasTimerExpired }) => ({
+  hasTimerExpired,
+});
+
+export default connect(mapStateToProps)(GameCard);

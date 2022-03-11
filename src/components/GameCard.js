@@ -16,8 +16,12 @@ class GameCard extends React.Component {
     ? 'correct-answer'
     : `wrong-answer-${element.index}`)
 
-  checkCorrectness = (el) => {
-    console.log(el.target.dataset.correctness);
+  checkCorrectness = ({ target: { dataset: { correctness } } }) => {
+    // const { saveScore } = this.props;
+    console.log(correctness);
+    // if (correctness) {
+    // saveScore(time);
+    // }
   }
 
   handleClickInAnswer = (el) => {
@@ -68,5 +72,9 @@ GameCard.propTypes = {
 const mapStateToProps = ({ hasTimerExpired }) => ({
   hasTimerExpired,
 });
+
+// const mapDispatchToProps = (dispatch) => ({
+//   saveScore: (time) => dispatch(saveScore(time)),
+// });
 
 export default connect(mapStateToProps)(GameCard);

@@ -3,7 +3,8 @@ import {
   SAVE_USER_TOKEN,
   SAVE_RESULTS,
   TIMER_EXPIRED,
-  SET_SCORE } from '../actions';
+  SET_SCORE,
+} from '../actions';
 
 const INITIAL_STATE = {
   player: {
@@ -11,6 +12,9 @@ const INITIAL_STATE = {
     assertions: '',
     score: '',
     gravatarEmail: '',
+  },
+  questionButtons: {
+    className: '',
   },
   token: '',
   questions: [],
@@ -50,7 +54,6 @@ const playerReducer = (state = INITIAL_STATE, action) => {
         assertions: state.player.assertions + 1,
       },
     };
-
   default:
     return state;
   }

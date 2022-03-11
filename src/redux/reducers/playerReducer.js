@@ -1,10 +1,14 @@
-import { SET_USER, SAVE_USER_TOKEN } from '../actions';
+import { SET_USER, SAVE_USER_TOKEN, SAVE_RESULTS } from '../actions';
 
 const INITIAL_STATE = {
-  name: '',
-  assertions: '',
-  score: '',
-  gravatarEmail: '',
+  player: {
+    name: '',
+    assertions: '',
+    score: '',
+    gravatarEmail: '',
+  },
+  token: '',
+  questions: [],
 };
 
 const playerReducer = (state = INITIAL_STATE, action) => {
@@ -12,11 +16,21 @@ const playerReducer = (state = INITIAL_STATE, action) => {
   case SET_USER:
     return {
       ...state,
-      name: action.payload.name,
-      gravatarEmail: action.payload.email,
+      player: {
+        name: action.payload.name,
+        gravatarEmail: action.payload.email,
+      },
     };
   case SAVE_USER_TOKEN:
-    return { ...state, token: action.userToken };
+    return {
+      ...state,
+      token: action.userToken,
+    };
+  case SAVE_RESULTS:
+    return {
+      ...state,
+      questions: action.payload,
+    };
   default:
     return state;
   }

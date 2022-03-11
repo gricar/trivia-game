@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import fetchTokenThunk, { setUser } from '../redux/actions';
+import { setUser, fetchTokenThunk } from '../redux/actions';
 import logo from '../trivia.png';
 import ConfigButton from '../components/ConfigButton';
 
@@ -27,11 +27,11 @@ class Login extends React.Component {
     }, this.validateEmail);
   }
 
-  handleSumbit = () => {
-    const { getGame, history, userToStore } = this.props;
+  handleSumbit = async () => {
+    const { getToken, history, userToStore } = this.props;
     const { name, email } = this.state;
     userToStore(name, email);
-    getGame();
+    await getToken();
     history.push('/game');
   };
 
@@ -41,8 +41,8 @@ class Login extends React.Component {
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
         <form>
-          <label htmlFor="login">
-            Login:
+          <label htmlFor="name">
+            Name:
             <input
               onChange={ this.handleInput }
               data-testid="input-player-name"
@@ -51,7 +51,7 @@ class Login extends React.Component {
               value={ name }
             />
           </label>
-          <label htmlFor="login">
+          <label htmlFor="email">
             email:
             <input
               onChange={ this.handleInput }
@@ -77,14 +77,14 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  getGame: PropTypes.func.isRequired,
+  getToken: PropTypes.func.isRequired,
   userToStore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
 };
 
-const mapStateToProps = ({ name, gravatarEmail, score }) => ({
+const mapStateToProps = ({ player: { name, gravatarEmail, score } }) => ({
   name,
   gravatarEmail,
   score,
@@ -92,7 +92,7 @@ const mapStateToProps = ({ name, gravatarEmail, score }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   userToStore: (name, email) => dispatch(setUser(name, email)),
-  getGame: () => dispatch(fetchTokenThunk()),
+  getToken: () => dispatch(fetchTokenThunk()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

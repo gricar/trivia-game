@@ -45,7 +45,10 @@ const playerReducer = (state = INITIAL_STATE, action) => {
   case SET_SCORE:
     return {
       ...state,
-      currentScore: state.currentScore + action.payload,
+      player: {
+        score: state.player.score + action.payload,
+        assertions: state.player.assertions + 1,
+      },
     };
 
   default:

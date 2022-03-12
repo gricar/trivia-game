@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
+  // Lint?
   handleAssertions = (assert) => {
     const COULD_BE_BETTER = 'Could be better...';
     const WELL_DONE = 'Well Done!';

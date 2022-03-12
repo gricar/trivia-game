@@ -62,6 +62,20 @@ class Game extends React.Component {
     });
   }
 
+  renderButton = () => {
+    const { isNextButtonShowed } = this.state;
+    if (isNextButtonShowed) {
+      return (
+        <button
+          data-testid="btn-next"
+          type="button"
+          onClick={ this.nextQuestion }
+        >
+          next
+        </button>);
+    }
+  }
+
   renderProperCard = () => {
     const { renderingCard, isNextButtonShowed } = this.state;
     const { questions } = this.props;
@@ -112,21 +126,13 @@ class Game extends React.Component {
   }
 
   render() {
-    const { isNextButtonShowed } = this.state;
     return (
       <>
         <Header />
         <div>
           { this.renderProperCard() }
         </div>
-        { isNextButtonShowed
-          ? (<button
-              data-testid="btn-next"
-              type="button"
-              onClick={ this.nextQuestion }
-          >
-            next
-          </button>) : null }
+        { this.renderButton()}
 
         {/* <Timer btnClicked={ btnClicked } /> */}
       </>

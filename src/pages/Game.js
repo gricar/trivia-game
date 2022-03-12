@@ -2,17 +2,57 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import { fetchQuestionsAndAnswersThunk } from '../redux/actions';
+import { fetchQuestionsAndAnswersThunk, setTimerExpired } from '../redux/actions';
 import GameCard from '../components/GameCard';
-// import Timer from '../components/Timer';
+import Timer from '../components/Timer';
 
 const RED_BACKGROUND = 'background-red';
 const GREEN_BACKGROUND = 'background-green';
 
 class Game extends React.Component {
   state = {
-    renderingCard: '0',
+    gamePhase: '0',
     isNextButtonShowed: false,
+    seconds: 30,
+  }
+
+  tickTimer = () => {
+    const ONE_SECOND = 20;
+    this.timerID = setInterval(() => {
+      this.setState((state) => ({
+        seconds: state.seconds - 1,
+      }));
+    }, ONE_SECOND);
+  }
+
+  endGame = () => {
+    this.stopTimer();
+    this.showNextButton();
+    this.addColorsToButtons();
+  }
+
+  resetTimer = () => {
+    this.setState(() => ({
+      seconds: 30,
+    }), this.tickTimer);
+  }
+
+  prepareNextPhase = () => {
+    const { enableQuestionsButton } = this.props;
+    this.removeColorsFromButtons();
+    this.hideNextButton();
+    this.resetTimer();
+    enableQuestionsButton();
+  }
+
+  nextQuestion = () => {
+    this.setState((state) => ({
+      gamePhase: `${Number(state.gamePhase) + 1}`,
+    }), this.prepareNextPhase);
+  }
+
+  stopTimer = () => {
+    clearInterval(this.timerID);
   }
 
   componentDidMount = async () => {
@@ -39,17 +79,6 @@ class Game extends React.Component {
     });
   }
 
-  clear = () => {
-    this.removeColorsFromButtons();
-    this.hideNextButton();
-  }
-
-  nextQuestion = () => {
-    this.setState((state) => ({
-      renderingCard: `${Number(state.renderingCard) + 1}`,
-    }), this.clear);
-  }
-
   showNextButton = () => {
     this.setState({
       isNextButtonShowed: true,
@@ -62,7 +91,7 @@ class Game extends React.Component {
     });
   }
 
-  renderButton = () => {
+  renderNextButton = () => {
     const { isNextButtonShowed } = this.state;
     if (isNextButtonShowed) {
       return (
@@ -77,13 +106,13 @@ class Game extends React.Component {
   }
 
   renderProperCard = () => {
-    const { renderingCard, isNextButtonShowed } = this.state;
+    const { gamePhase, isNextButtonShowed } = this.state;
     const { questions } = this.props;
 
     if (questions.length > 0) {
-      const NUMBERS = ['0', '1', '2', '3', '4'];
+      const NUMBERS = ['0', '1', '2', '3', '4', '5'];
 
-      switch (renderingCard) {
+      switch (gamePhase) {
       case NUMBERS[0]:
         return (<GameCard
           addColorsToButtons={ this.addColorsToButtons }
@@ -126,13 +155,21 @@ class Game extends React.Component {
   }
 
   render() {
+    const { seconds } = this.state;
     return (
       <>
         <Header />
+        <Timer
+          endGame={ this.endGame }
+          addColorsToButtons={ this.addColorsToButtons }
+          stopTimer={ this.stopTimer }
+          tickTimer={ this.tickTimer }
+          seconds={ seconds }
+        />
         <div>
           { this.renderProperCard() }
         </div>
-        { this.renderButton()}
+        { this.renderNextButton()}
 
         {/* <Timer btnClicked={ btnClicked } /> */}
       </>
@@ -144,6 +181,7 @@ Game.propTypes = {
   token: PropTypes.string.isRequired,
   getQuestionsAndAnswers: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  enableQuestionsButton: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ hasToken, token, questions }) => ({
@@ -154,6 +192,7 @@ const mapStateToProps = ({ hasToken, token, questions }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getQuestionsAndAnswers: (token) => dispatch(fetchQuestionsAndAnswersThunk(token)),
+  enableQuestionsButton: () => dispatch(setTimerExpired(false)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

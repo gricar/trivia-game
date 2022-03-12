@@ -21,14 +21,20 @@ class Feedback extends React.Component {
   }
 
   render() {
-    const { assertions } = this.props;
+    const { assertions, score, history } = this.props;
     return (
       <>
         <Header />
         <h1 data-testid="feedback-text">
           {this.handleAssertions(assertions)}
-
         </h1>
+        <p>Voce acertou: </p>
+        <h2 data-testid="feedback-total-question">{assertions}</h2>
+        <p>Seu placar final eh: </p>
+        <h2 data-testid="feedback-total-score">{score}</h2>
+
+        <button data-testid="btn-play-again" type="button" onClick={ () => history.push('/') }><h3>Clique aqui para jogar novamente!</h3></button>
+
       </>
     );
   }
@@ -36,6 +42,8 @@ class Feedback extends React.Component {
 
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
+  history: PropTypes.objectOf(Object).isRequired,
 };
 
 const mapStateToProps = ({ player: { assertions, name, score } }) => ({

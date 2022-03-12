@@ -1,6 +1,7 @@
 import fetchToken from '../../services/fetchToken';
 import fetchQuestionsAndAnswers from '../../services/fetchQuestionsAndAnswers';
 import { saveInLocalStorage } from '../../services/localStorage';
+import randomizeQuestions from '../../helpers.js/randomizeQuestions';
 
 export const TEN = 10;
 export const SET_SCORE = 'SET_SCORE';
@@ -35,14 +36,14 @@ const saveResults = (results) => ({
 });
 
 export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
-  const THREE = 3; // NO MAGIC NUMBERS
-  const requestAPI = await fetchQuestionsAndAnswers(token); // usa token salvo para buscar Q&As
-  if (requestAPI.response_code === THREE) { // response_code = 3 significa token expirado
+  const THREE = 3;
+  const requestAPI = await fetchQuestionsAndAnswers(token);
+  if (requestAPI.response_code === THREE) {
     const newToken = await fetchToken();
-    dispatch(fetchQuestionsAndAnswersThunk(newToken)); // entao renova token e faz nova requisicao
+    dispatch(fetchQuestionsAndAnswersThunk(newToken));
   }
   if (requestAPI.response_code === 0) {
-    const questions = requestAPI.results.map((question) => ({ // percorre o array vindo da requisicao
+    const questions = requestAPI.results.map((question) => ({
       question: question.question,
       category: question.category,
       correctAnswer: [{ correctness: true, content: question.correct_answer }],
@@ -50,9 +51,11 @@ export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
         correctness: false,
         content: incorrectElement,
         index,
-      })), // montando novo objeto para facilitar manipulacao posterior, incluindo index incremental apenas para respostas incorretas.
+      })),
     }));
-    dispatch(saveResults(questions));
+    const randomizedQuestions = randomizeQuestions(questions);
+
+    dispatch(saveResults(randomizedQuestions));
   }
   return requestAPI;
 };

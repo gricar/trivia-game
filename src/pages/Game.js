@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { fetchQuestionsAndAnswersThunk } from '../redux/actions';
 import GameCard from '../components/GameCard';
-import Timer from '../components/Timer';
+// import Timer from '../components/Timer';
+
+const RED_BACKGROUND = 'background-red';
+const GREEN_BACKGROUND = 'background-green';
 
 class Game extends React.Component {
   state = {
     renderingCard: '0',
-    btnClicked: false,
+    isNextButtonShowed: false,
   }
 
   componentDidMount = async () => {
@@ -17,22 +20,50 @@ class Game extends React.Component {
     getQuestionsAndAnswers(token);
   }
 
+  addColorsToButtons = () => {
+    const buttons = document.querySelectorAll('.answers');
+    buttons.forEach((element) => {
+      if (element.dataset.correctness === 'false') {
+        element.classList.add(RED_BACKGROUND);
+      } else {
+        element.classList.add(GREEN_BACKGROUND);
+      }
+    });
+  }
+
+  removeColorsFromButtons = () => {
+    const elementoToBeColored = document.querySelectorAll('.answers');
+    elementoToBeColored.forEach((element) => {
+      element.classList.remove(RED_BACKGROUND);
+      element.classList.remove(GREEN_BACKGROUND);
+    });
+  }
+
+  clear = () => {
+    this.removeColorsFromButtons();
+    this.hideNextButton();
+  }
+
   nextQuestion = () => {
     this.setState((state) => ({
       renderingCard: `${Number(state.renderingCard) + 1}`,
-      btnClicked: !state.btnClicked,
-    }));
+    }), this.clear);
   }
 
-  randomizeColor = (questionsToBeRandomized) => {
-    const ZERO_FIVE = 0.5;
-    const { incorrectAnswers, correctAnswer } = questionsToBeRandomized;
-    return incorrectAnswers.concat(correctAnswer)
-      .sort(() => Math.random() - ZERO_FIVE);
+  showNextButton = () => {
+    this.setState({
+      isNextButtonShowed: true,
+    });
+  }
+
+  hideNextButton = () => {
+    this.setState({
+      isNextButtonShowed: false,
+    });
   }
 
   renderProperCard = () => {
-    const { renderingCard } = this.state;
+    const { renderingCard, isNextButtonShowed } = this.state;
     const { questions } = this.props;
 
     if (questions.length > 0) {
@@ -41,29 +72,38 @@ class Game extends React.Component {
       switch (renderingCard) {
       case NUMBERS[0]:
         return (<GameCard
+          addColorsToButtons={ this.addColorsToButtons }
+          isNextButtonShowed={ isNextButtonShowed }
           questions={ questions[0] }
-          lala={ this.state }
-          randomizedQuestions={ this.randomizeColor(questions[0]) }
+          showNextButton={ this.showNextButton }
         />);
       case NUMBERS[1]:
         return (<GameCard
+          addColorsToButtons={ this.addColorsToButtons }
+          isNextButtonShowed={ isNextButtonShowed }
+          showNextButton={ this.showNextButton }
           questions={ questions[1] }
-          randomizedQuestions={ this.randomizeColor(questions[1]) }
         />);
       case NUMBERS[2]:
         return (<GameCard
+          addColorsToButtons={ this.addColorsToButtons }
+          isNextButtonShowed={ isNextButtonShowed }
+          showNextButton={ this.showNextButton }
           questions={ questions[2] }
-          randomizedQuestions={ this.randomizeColor(questions[2]) }
         />);
       case NUMBERS[3]:
         return (<GameCard
+          addColorsToButtons={ this.addColorsToButtons }
+          isNextButtonShowed={ isNextButtonShowed }
+          showNextButton={ this.showNextButton }
           questions={ questions[3] }
-          randomizedQuestions={ this.randomizeColor(questions[3]) }
         />);
       case NUMBERS[4]:
         return (<GameCard
+          addColorsToButtons={ this.addColorsToButtons }
+          isNextButtonShowed={ isNextButtonShowed }
+          showNextButton={ this.showNextButton }
           questions={ questions[4] }
-          randomizedQuestions={ this.randomizeColor(questions[4]) }
         />);
       default:
         return null;
@@ -72,15 +112,23 @@ class Game extends React.Component {
   }
 
   render() {
-    const { btnClicked } = this.state;
+    const { isNextButtonShowed } = this.state;
     return (
       <>
         <Header />
         <div>
           { this.renderProperCard() }
         </div>
-        <button type="button" onClick={ this.nextQuestion }>next</button>
-        <Timer btnClicked={ btnClicked } />
+        { isNextButtonShowed
+          ? (<button
+              data-testid="btn-next"
+              type="button"
+              onClick={ this.nextQuestion }
+          >
+            next
+          </button>) : null }
+
+        {/* <Timer btnClicked={ btnClicked } /> */}
       </>
     );
   }

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setTimerExpired } from '../redux/actions';
 
 class Timer extends React.Component {
   componentDidMount = () => {
@@ -16,13 +15,11 @@ class Timer extends React.Component {
 
   componentDidUpdate = () => {
     const { seconds, endGame } = this.props;
-    const { dispatch } = this.props;
     const ZERO = 0;
     if (seconds === ZERO) {
       // stopTimer();
       // addColorsToButtons();
       endGame();
-      dispatch(setTimerExpired(true));
     }
   }
 
@@ -39,7 +36,6 @@ Timer.propTypes = {
   endGame: PropTypes.func.isRequired,
   stopTimer: PropTypes.func.isRequired,
   seconds: PropTypes.number.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect()(Timer);

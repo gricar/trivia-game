@@ -8,7 +8,7 @@ export const SET_SCORE = 'SET_SCORE';
 export const SET_USER = 'SET_USER';
 export const SAVE_USER_TOKEN = 'SAVE_USER_TOKEN';
 export const SAVE_RESULTS = 'SAVE_RESULTS';
-export const TIMER_EXPIRED = 'TIMER_EXPIRED';
+export const CHOICES_EXPIRED = 'CHOICES_EXPIRED';
 
 export const saveToken = (userToken) => ({
   type: SAVE_USER_TOKEN,
@@ -61,8 +61,8 @@ export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
   return requestAPI;
 };
 
-export const setTimerExpired = (hasExpired) => ({
-  type: TIMER_EXPIRED,
+export const expireChoices = (hasExpired) => ({
+  type: CHOICES_EXPIRED,
   payload: hasExpired,
 });
 

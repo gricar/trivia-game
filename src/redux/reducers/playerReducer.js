@@ -2,7 +2,7 @@ import {
   SET_USER,
   SAVE_USER_TOKEN,
   SAVE_RESULTS,
-  TIMER_EXPIRED,
+  CHOICES_EXPIRED,
   SET_SCORE,
 } from '../actions';
 
@@ -43,10 +43,10 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       ...state,
       questions: action.payload,
     };
-  case TIMER_EXPIRED:
+  case CHOICES_EXPIRED:
     return {
       ...state,
-      hasTimerExpired: action.payload,
+      hasChoicesExpired: action.payload,
     };
   case SET_SCORE:
     return {

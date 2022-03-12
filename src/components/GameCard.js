@@ -28,8 +28,6 @@ class GameCard extends React.Component {
     const { saveScore, seconds, questions: { difficulty } } = this.props;
     if (correctness === 'true') {
       saveScore(seconds, this.getDifficulty(difficulty));
-      console.log(this.getDifficulty(difficulty));
-      console.log(seconds);
     }
   };
 
@@ -40,7 +38,7 @@ class GameCard extends React.Component {
   };
 
   render() {
-    const { hasTimerExpired, questions } = this.props;
+    const { hasChoicesExpired, questions } = this.props;
 
     return (
       <div className="game-card">
@@ -53,7 +51,7 @@ class GameCard extends React.Component {
               data-testid={ this.setDatatestId(el, index) }
               type="button"
               key={ index }
-              disabled={ hasTimerExpired }
+              disabled={ hasChoicesExpired }
               onClick={ this.handleClickInAnswer }
               data-correctness={ el.correctness }
             >
@@ -67,7 +65,7 @@ class GameCard extends React.Component {
 }
 
 GameCard.propTypes = {
-  hasTimerExpired: PropTypes.bool.isRequired,
+  hasChoicesExpired: PropTypes.bool.isRequired,
   questions: PropTypes.PropTypes.objectOf(Object).isRequired,
   // showNextButton: PropTypes.func.isRequired,
   // addColorsToButtons: PropTypes.func.isRequired,
@@ -76,8 +74,8 @@ GameCard.propTypes = {
   seconds: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = ({ hasTimerExpired, buttonClass }) => ({
-  hasTimerExpired,
+const mapStateToProps = ({ hasChoicesExpired, buttonClass }) => ({
+  hasChoicesExpired,
   buttonClass,
 });
 

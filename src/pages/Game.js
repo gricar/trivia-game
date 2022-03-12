@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import { fetchQuestionsAndAnswersThunk, setTimerExpired } from '../redux/actions';
+import { expireChoices, fetchQuestionsAndAnswersThunk } from '../redux/actions';
 import GameCard from '../components/GameCard';
 import Timer from '../components/Timer';
 
@@ -17,7 +17,7 @@ class Game extends React.Component {
   }
 
   tickTimer = () => {
-    const ONE_SECOND = 1000;
+    const ONE_SECOND = 200;
     this.timerID = setInterval(() => {
       this.setState((state) => ({
         seconds: state.seconds - 1,
@@ -26,7 +26,9 @@ class Game extends React.Component {
   }
 
   endGame = () => {
+    const { disableQuestionsButton } = this.props;
     this.stopTimer();
+    disableQuestionsButton();
     this.showNextButton();
     this.addColorsToButtons();
   }
@@ -180,8 +182,6 @@ class Game extends React.Component {
           { this.renderProperCard() }
         </div>
         { this.renderNextButton()}
-
-        {/* <Timer btnClicked={ btnClicked } /> */}
       </>
     );
   }
@@ -192,6 +192,7 @@ Game.propTypes = {
   getQuestionsAndAnswers: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   enableQuestionsButton: PropTypes.func.isRequired,
+  disableQuestionsButton: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ hasToken, token, questions }) => ({
@@ -202,7 +203,8 @@ const mapStateToProps = ({ hasToken, token, questions }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getQuestionsAndAnswers: (token) => dispatch(fetchQuestionsAndAnswersThunk(token)),
-  enableQuestionsButton: () => dispatch(setTimerExpired(false)),
+  enableQuestionsButton: () => dispatch(expireChoices(false)),
+  disableQuestionsButton: () => dispatch(expireChoices(true)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

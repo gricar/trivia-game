@@ -66,11 +66,7 @@ export const expireChoices = (hasExpired) => ({
   payload: hasExpired,
 });
 
-export const setScore = (timeInSec, dificulty) => {
-  console.log(dificulty);
-  return {
-    type: SET_SCORE,
-    payload: TEN + (timeInSec * dificulty),
-
-  };
-};
+export const setScore = (timeInSec, dificulty) => ({
+  type: SET_SCORE,
+  payload: TEN + (timeInSec * dificulty),
+});

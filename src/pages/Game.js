@@ -17,7 +17,7 @@ class Game extends React.Component {
   }
 
   tickTimer = () => {
-    const ONE_SECOND = 200;
+    const ONE_SECOND = 1000;
     this.timerID = setInterval(() => {
       this.setState((state) => ({
         seconds: state.seconds - 1,

@@ -17,7 +17,7 @@ class Game extends React.Component {
   }
 
   tickTimer = () => {
-    const ONE_SECOND = 20;
+    const ONE_SECOND = 1000;
     this.timerID = setInterval(() => {
       this.setState((state) => ({
         seconds: state.seconds - 1,
@@ -106,7 +106,7 @@ class Game extends React.Component {
   }
 
   renderProperCard = () => {
-    const { gamePhase, isNextButtonShowed } = this.state;
+    const { gamePhase, isNextButtonShowed, seconds } = this.state;
     const { questions } = this.props;
 
     if (questions.length > 0) {
@@ -115,6 +115,8 @@ class Game extends React.Component {
       switch (gamePhase) {
       case NUMBERS[0]:
         return (<GameCard
+          seconds={ seconds }
+          endGame={ this.endGame }
           addColorsToButtons={ this.addColorsToButtons }
           isNextButtonShowed={ isNextButtonShowed }
           questions={ questions[0] }
@@ -122,6 +124,8 @@ class Game extends React.Component {
         />);
       case NUMBERS[1]:
         return (<GameCard
+          seconds={ seconds }
+          endGame={ this.endGame }
           addColorsToButtons={ this.addColorsToButtons }
           isNextButtonShowed={ isNextButtonShowed }
           showNextButton={ this.showNextButton }
@@ -129,6 +133,8 @@ class Game extends React.Component {
         />);
       case NUMBERS[2]:
         return (<GameCard
+          seconds={ seconds }
+          endGame={ this.endGame }
           addColorsToButtons={ this.addColorsToButtons }
           isNextButtonShowed={ isNextButtonShowed }
           showNextButton={ this.showNextButton }
@@ -136,6 +142,8 @@ class Game extends React.Component {
         />);
       case NUMBERS[3]:
         return (<GameCard
+          seconds={ seconds }
+          endGame={ this.endGame }
           addColorsToButtons={ this.addColorsToButtons }
           isNextButtonShowed={ isNextButtonShowed }
           showNextButton={ this.showNextButton }
@@ -143,6 +151,8 @@ class Game extends React.Component {
         />);
       case NUMBERS[4]:
         return (<GameCard
+          seconds={ seconds }
+          endGame={ this.endGame }
           addColorsToButtons={ this.addColorsToButtons }
           isNextButtonShowed={ isNextButtonShowed }
           showNextButton={ this.showNextButton }

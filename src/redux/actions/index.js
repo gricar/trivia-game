@@ -44,6 +44,7 @@ export const fetchQuestionsAndAnswersThunk = (token) => async (dispatch) => {
   }
   if (requestAPI.response_code === 0) {
     const questions = requestAPI.results.map((question) => ({
+      difficulty: question.difficulty,
       question: question.question,
       category: question.category,
       correctAnswer: [{ correctness: true, content: question.correct_answer }],
@@ -65,7 +66,11 @@ export const setTimerExpired = (hasExpired) => ({
   payload: hasExpired,
 });
 
-export const setScore = (timeInSec, dificulty) => ({
-  type: SET_SCORE,
-  payload: TEN + (timeInSec * dificulty),
-});
+export const setScore = (timeInSec, dificulty) => {
+  console.log(dificulty);
+  return {
+    type: SET_SCORE,
+    payload: TEN + (timeInSec * dificulty),
+
+  };
+};

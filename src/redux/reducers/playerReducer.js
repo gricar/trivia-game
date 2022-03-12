@@ -9,9 +9,9 @@ import {
 const INITIAL_STATE = {
   player: {
     name: '',
-    assertions: '',
-    score: '',
     gravatarEmail: '',
+    score: 0,
+    assertions: 0,
   },
   questionButtons: {
     className: '',
@@ -29,6 +29,8 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       player: {
         name: action.payload.name,
         gravatarEmail: action.payload.email,
+        score: 0,
+        assertions: 0,
       },
     };
   case SAVE_USER_TOKEN:
@@ -50,6 +52,8 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       player: {
+        name: state.player.name,
+        gravatarEmail: state.player.gravatarEmail,
         score: state.player.score + action.payload,
         assertions: state.player.assertions + 1,
       },

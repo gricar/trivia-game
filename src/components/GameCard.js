@@ -2,29 +2,46 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './GameCard.css';
+import { setScore } from '../redux/actions';
 
 class GameCard extends React.Component {
+  getDifficulty = (difficulty) => {
+    const THREE = 3;
+    switch (difficulty) {
+    case 'easy':
+      return 1;
+    case 'medium':
+      return 2;
+    case 'hard':
+      return THREE;
+    default:
+      break;
+    }
+  }
+
   setDatatestId = (element) => (element.correctness === true
     ? 'correct-answer'
     : `wrong-answer-${element.index}`)
 
-  checkCorrectness = () => {
-    // const { target: { dataset: { correctness } } } = buttonElement;
-    // const { saveScore } = this.props;
-    // if (correctness === true) {
-    // // saveScore(time);
-    // }
+  checkCorrectness = (buttonElement) => {
+    const { target: { dataset: { correctness } } } = buttonElement;
+    const { saveScore, seconds, questions: { difficulty } } = this.props;
+    if (correctness === 'true') {
+      saveScore(seconds, this.getDifficulty(difficulty));
+      console.log(this.getDifficulty(difficulty));
+      console.log(seconds);
+    }
   };
 
-  handleClickInAnswer = () => {
-    const { showNextButton, addColorsToButtons } = this.props;
-    // this.checkCorrectness(buttonElement);
-    showNextButton();
-    addColorsToButtons();
+  handleClickInAnswer = (buttonElement) => {
+    const { endGame } = this.props;
+    this.checkCorrectness(buttonElement);
+    endGame();
   };
 
   render() {
     const { hasTimerExpired, questions } = this.props;
+
     return (
       <div className="game-card">
         <h3 data-testid="question-category">{ questions.category}</h3>
@@ -52,8 +69,11 @@ class GameCard extends React.Component {
 GameCard.propTypes = {
   hasTimerExpired: PropTypes.bool.isRequired,
   questions: PropTypes.PropTypes.objectOf(Object).isRequired,
-  showNextButton: PropTypes.func.isRequired,
-  addColorsToButtons: PropTypes.func.isRequired,
+  // showNextButton: PropTypes.func.isRequired,
+  // addColorsToButtons: PropTypes.func.isRequired,
+  endGame: PropTypes.func.isRequired,
+  saveScore: PropTypes.func.isRequired,
+  seconds: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = ({ hasTimerExpired, buttonClass }) => ({
@@ -61,8 +81,8 @@ const mapStateToProps = ({ hasTimerExpired, buttonClass }) => ({
   buttonClass,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   saveScore: (time) => dispatch(saveScore(time)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  saveScore: (time, diff) => dispatch(setScore(time, diff)),
+});
 
-export default connect(mapStateToProps)(GameCard);
+export default connect(mapStateToProps, mapDispatchToProps)(GameCard);

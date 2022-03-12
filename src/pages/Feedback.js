@@ -33,7 +33,23 @@ class Feedback extends React.Component {
         <p>Seu placar final eh: </p>
         <h2 data-testid="feedback-total-score">{score}</h2>
 
-        <button data-testid="btn-play-again" type="button" onClick={ () => history.push('/') }><h3>Clique aqui para jogar novamente!</h3></button>
+        <button
+          data-testid="btn-play-again"
+          type="button"
+          onClick={ () => history.push('/') }
+        >
+          <h3>Clique aqui para jogar novamente!</h3>
+
+        </button>
+
+        <button
+          data-testid="btn-ranking"
+          type="button"
+          onClick={ () => history.push('/ranking') }
+        >
+          <h3>Melhores Resultados</h3>
+
+        </button>
 
       </>
     );

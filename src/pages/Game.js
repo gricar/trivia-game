@@ -109,7 +109,7 @@ class Game extends React.Component {
 
   renderProperCard = () => {
     const { gamePhase, isNextButtonShowed, seconds } = this.state;
-    const { questions } = this.props;
+    const { questions, history } = this.props;
 
     if (questions.length > 0) {
       const NUMBERS = ['0', '1', '2', '3', '4', '5'];
@@ -160,6 +160,9 @@ class Game extends React.Component {
           showNextButton={ this.showNextButton }
           questions={ questions[4] }
         />);
+      case NUMBERS[5]:
+        history.push('/feedback');
+        break;
       default:
         return null;
       }
@@ -193,6 +196,7 @@ Game.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   enableQuestionsButton: PropTypes.func.isRequired,
   disableQuestionsButton: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(Object).isRequired,
 };
 
 const mapStateToProps = ({ hasToken, token, questions }) => ({

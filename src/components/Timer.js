@@ -17,8 +17,6 @@ class Timer extends React.Component {
     const { seconds, endGame } = this.props;
     const ZERO = 0;
     if (seconds === ZERO) {
-      // stopTimer();
-      // addColorsToButtons();
       endGame();
     }
   }

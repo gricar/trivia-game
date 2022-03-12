@@ -18,7 +18,7 @@ const INITIAL_STATE = {
   },
   token: '',
   questions: [],
-  hasTimerExpired: false,
+  hasChoicesExpired: false,
 };
 
 const playerReducer = (state = INITIAL_STATE, action) => {

@@ -77,7 +77,7 @@ class GameCard extends React.Component {
 }
 
 GameCard.propTypes = {
-  randomizedQuestions: PropTypes.objectOf(Object).isRequired,
+  randomizedQuestions: PropTypes.arrayOf(Object).isRequired,
   hasTimerExpired: PropTypes.bool.isRequired,
   questions: PropTypes.PropTypes.objectOf(Object).isRequired,
 };

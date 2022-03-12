@@ -12,7 +12,6 @@ class Game extends React.Component {
     btnClicked: false,
   }
 
-  // busca as respostas utilizando o token salvo na store
   componentDidMount = async () => {
     const { token, getQuestionsAndAnswers } = this.props;
     getQuestionsAndAnswers(token);
@@ -22,25 +21,23 @@ class Game extends React.Component {
     this.setState((state) => ({
       renderingCard: `${Number(state.renderingCard) + 1}`,
       btnClicked: !state.btnClicked,
-    })); // lint nao permite usar numeros, eis a solucao: tranformar de numero para string, string para numero, somar, de volta para string. elegante?
+    }));
   }
 
   randomizeColor = (questionsToBeRandomized) => {
-    const ZERO_FIVE = 0.5; // NO MAGIC NUMBERS
+    const ZERO_FIVE = 0.5;
     const { incorrectAnswers, correctAnswer } = questionsToBeRandomized;
     return incorrectAnswers.concat(correctAnswer)
-      .sort(() => Math.random() - ZERO_FIVE); // concatenar as perguntas e randomiza-las.
+      .sort(() => Math.random() - ZERO_FIVE);
   }
 
-  // controle de qual card (perguntas e respostas) sera renderizado
   renderProperCard = () => {
     const { renderingCard } = this.state;
     const { questions } = this.props;
 
     if (questions.length > 0) {
-      const NUMBERS = ['0', '1', '2', '3', '4']; // NO MAGIC NUMBERS
+      const NUMBERS = ['0', '1', '2', '3', '4'];
 
-      // this.state.renderingcard controlara a renderizacao
       switch (renderingCard) {
       case NUMBERS[0]:
         return (<GameCard

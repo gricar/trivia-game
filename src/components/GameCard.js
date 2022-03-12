@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './GameCard.css';
 
-const BACKGROUND_RED = 'background-red';
-const BACKGROUND_GREEN = 'background-green';
+const RED_BACKGROUND = 'background-red';
+const GREEN_BACKGROUND = 'background-green';
 class GameCard extends React.Component {
   setDatatestId = (element) => (element.correctness === true
     ? 'correct-answer'
@@ -14,20 +14,24 @@ class GameCard extends React.Component {
       const buttons = document.querySelectorAll('.answers');
       buttons.forEach((element) => {
         if (element.dataset.correctness === 'false') {
-          element.classList.add(BACKGROUND_RED);
+          element.classList.add(RED_BACKGROUND);
         } else {
-          element.classList.add(BACKGROUND_GREEN);
+          element.classList.add(GREEN_BACKGROUND);
         }
       });
     }
 
-      checkCorrectness = () => {
-        // const { target: { dataset: { correctness } } } = buttonElement;
+      checkCorrectness = (buttonElement) => {
         // const { saveScore } = this.props;
-        // if (correctness === 'true') {
+        // if (correctness === true) {
         // // saveScore(time);
         // }
+        const { target: { dataset: { correctness } } } = buttonElement;
         this.paintButtons();
+
+        if (correctness === 'true') {
+          buttonElement.target.classList.add(GREEN_BACKGROUND);
+        }
       };
 
   componentDidUpdate = (prevProps) => {
@@ -36,8 +40,8 @@ class GameCard extends React.Component {
       && randomizedQuestions !== undefined) {
       const el = document.querySelectorAll('.answers');
       el.forEach((element) => {
-        element.classList.remove(BACKGROUND_RED);
-        element.classList.remove(BACKGROUND_GREEN);
+        element.classList.remove(RED_BACKGROUND);
+        element.classList.remove(GREEN_BACKGROUND);
       });
     }
   }
@@ -73,7 +77,7 @@ class GameCard extends React.Component {
 }
 
 GameCard.propTypes = {
-  randomizedQuestions: PropTypes.arrayOf(Object).isRequired,
+  randomizedQuestions: PropTypes.objectOf(Object).isRequired,
   hasTimerExpired: PropTypes.bool.isRequired,
   questions: PropTypes.PropTypes.objectOf(Object).isRequired,
 };

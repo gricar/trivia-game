@@ -1,64 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setTimerExpired } from '../redux/actions';
 
 class Timer extends React.Component {
-  state = {
-    timeInSec: 30,
+  componentDidMount = () => {
+    const { tickTimer } = this.props;
+    tickTimer();
   }
 
-  componentDidMount() {
-    this.countdown();
+  componentWillUnmount = () => {
+    const { stopTimer } = this.props;
+    stopTimer();
   }
 
-  componentDidUpdate(prevProps) {
-    const { timeInSec, intervalTime } = this.state;
-    const { btnClicked, dispatch } = this.props;
-    if (timeInSec === 0) {
-      dispatch(setTimerExpired(true));
-      clearInterval(intervalTime);
+  componentDidUpdate = () => {
+    const { seconds, endGame } = this.props;
+    const ZERO = 0;
+    if (seconds === ZERO) {
+      endGame();
     }
-
-    if (btnClicked !== prevProps.btnClicked) {
-      this.resetTimerAndButtons();
-    }
-  }
-
-  countdown = () => {
-    const ONE_SECOND = 1000;
-
-    const intervalTime = setInterval(() => {
-      this.setState((prevState) => ({
-        timeInSec: prevState.timeInSec - 1,
-      }));
-    }, ONE_SECOND);
-
-    this.setState({ intervalTime });
-  }
-
-  resetTimerAndButtons = () => {
-    this.setState(() => ({
-      timeInSec: 30,
-    }), this.countdown());
-
-    const { dispatch } = this.props;
-    dispatch(setTimerExpired(false));
   }
 
   render() {
-    const { timeInSec } = this.state;
+    const { seconds } = this.props;
     return (
-      <div>
-        { `${timeInSec}s` }
-      </div>
+      <h1>{seconds}</h1>
     );
   }
 }
 
 Timer.propTypes = {
-  btnClicked: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired,
+  tickTimer: PropTypes.func.isRequired,
+  endGame: PropTypes.func.isRequired,
+  stopTimer: PropTypes.func.isRequired,
+  seconds: PropTypes.number.isRequired,
 };
 
 export default connect()(Timer);

@@ -1,52 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import './GameCard.css';
+import { setScore } from '../redux/actions';
 
 class GameCard extends React.Component {
-  componentDidUpdate() {
-    const correct = document.querySelector('.correctAnswer');
-    const incorrect = document.querySelectorAll('.incorrectAnswer');
-    if (correct !== null) {
-      correct.className = 'answer';
+  getDifficulty = (difficulty) => {
+    const THREE = 3;
+    switch (difficulty) {
+    case 'easy':
+      return 1;
+    case 'medium':
+      return 2;
+    case 'hard':
+      return THREE;
+    default:
+      break;
     }
-    incorrect.forEach((element) => { element.className = 'answer'; });
   }
 
-  trueOrFalse = (element) => (element.correctness === true
+  setDatatestId = (element) => (element.correctness === true
     ? 'correct-answer'
     : `wrong-answer-${element.index}`)
 
-  checkCorrectness = (el) => {
-    console.log(el.target.dataset.correctness);
-  }
+  checkCorrectness = (buttonElement) => {
+    const { target: { dataset: { correctness } } } = buttonElement;
+    const { saveScore, seconds, questions: { difficulty } } = this.props;
+    if (correctness === 'true') {
+      saveScore(seconds, this.getDifficulty(difficulty));
+    }
+  };
 
-  handleClickInAnswer = (el) => {
-    this.checkCorrectness(el);
-    const arr = document.querySelectorAll('.answer');
-    arr.forEach((element) => {
-      if (element.name === 'correct-answer') {
-        element.className = 'correctAnswer';
-      } else {
-        element.className = 'incorrectAnswer';
-      }
-    });
+  handleClickInAnswer = (buttonElement) => {
+    const { endGame } = this.props;
+    this.checkCorrectness(buttonElement);
+    endGame();
   };
 
   render() {
-    const { hasTimerExpired, randomizedQuestions, questions } = this.props;
+    const { hasChoicesExpired, questions } = this.props;
+
     return (
       <div className="game-card">
         <h3 data-testid="question-category">{ questions.category}</h3>
         <h3 data-testid="question-text">{questions.question}</h3>
         <div data-testid="answer-options">
-          { randomizedQuestions.map((el, index) => (
+          { questions.answers.map((el, index) => (
             <button
-              data-testid={ this.trueOrFalse(el, index) }
-              className="answer"
-              name={ this.trueOrFalse(el, index) }
+              className="answers"
+              data-testid={ this.setDatatestId(el, index) }
               type="button"
               key={ index }
-              disabled={ hasTimerExpired }
+              disabled={ hasChoicesExpired }
               onClick={ this.handleClickInAnswer }
               data-correctness={ el.correctness }
             >
@@ -60,13 +65,22 @@ class GameCard extends React.Component {
 }
 
 GameCard.propTypes = {
-  randomizedQuestions: PropTypes.objectOf(Object).isRequired,
-  hasTimerExpired: PropTypes.bool.isRequired,
+  hasChoicesExpired: PropTypes.bool.isRequired,
   questions: PropTypes.PropTypes.objectOf(Object).isRequired,
+  // showNextButton: PropTypes.func.isRequired,
+  // addColorsToButtons: PropTypes.func.isRequired,
+  endGame: PropTypes.func.isRequired,
+  saveScore: PropTypes.func.isRequired,
+  seconds: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = ({ hasTimerExpired }) => ({
-  hasTimerExpired,
+const mapStateToProps = ({ hasChoicesExpired, buttonClass }) => ({
+  hasChoicesExpired,
+  buttonClass,
 });
 
-export default connect(mapStateToProps)(GameCard);
+const mapDispatchToProps = (dispatch) => ({
+  saveScore: (time, diff) => dispatch(setScore(time, diff)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameCard);

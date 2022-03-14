@@ -6,4 +6,3 @@ const getGravatarUrl = (email) => {
 };
 
 export default getGravatarUrl;
-// console.log(md5('felipe.eleotero@gmail.com').toString());

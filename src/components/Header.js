@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 import getGravatarUrl from '../services/getGravatarUrls';
 
 class Header extends React.Component {
+  componentDidUpdate = () => {
+    const { score } = this.props;
+    localStorage.setItem('score', score);
+  }
+
   render() {
     const { name, gravatarEmail, score } = this.props;
     return (
@@ -18,7 +23,6 @@ class Header extends React.Component {
           {name}
         </p>
         <p data-testid="header-score">
-          Score: 0
           {score}
         </p>
       </div>
@@ -29,7 +33,7 @@ class Header extends React.Component {
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
-  score: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = ({ player: { name, gravatarEmail, score } }) => ({

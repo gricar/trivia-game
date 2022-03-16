@@ -8,6 +8,7 @@ class ConfigButton extends React.Component {
         <button
           data-testid="btn-settings"
           type="button"
+          className="settings-btn"
         >
           Configurações
         </button>

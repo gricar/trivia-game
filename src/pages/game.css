@@ -9,6 +9,7 @@
 }
 
 .App-logo {
+  padding-bottom: 50px;
   width: 400px;
 }
 
@@ -54,7 +55,7 @@
   margin-top: 15px;
   opacity: 0.4;
   padding: 10px 20px;
-  width: 60%;
+  width: 40%;
 }
 
 .loginForm > button:enabled {
@@ -76,7 +77,7 @@
   cursor: pointer;
   font-size: 16px;
   letter-spacing: 1px;
-  margin-top: 15px;
+  margin-top: 40px;
   opacity: 0.8;
   padding: 10px 20px;
 }

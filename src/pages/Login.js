@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { setUser, fetchTokenThunk } from '../redux/actions';
 import logo from '../trivia.png';
 import ConfigButton from '../components/ConfigButton';
+import './game.css';
 
 class Login extends React.Component {
   state = {
@@ -38,9 +39,9 @@ class Login extends React.Component {
   render() {
     const { name, email, isButtonDisabled } = this.state;
     return (
-      <header className="App-header">
+      <div className="login-page">
         <img src={ logo } className="App-logo" alt="logo" />
-        <form>
+        <form className="loginForm">
           <label htmlFor="name">
             Name:
             <input
@@ -49,16 +50,18 @@ class Login extends React.Component {
               name="name"
               type="text"
               value={ name }
+              className="login-input"
             />
           </label>
           <label htmlFor="email">
-            email:
+            E-mail:
             <input
               onChange={ this.handleInput }
               data-testid="input-gravatar-email"
               name="email"
               type="email"
               value={ email }
+              className="login-input"
             />
           </label>
           <button
@@ -71,7 +74,7 @@ class Login extends React.Component {
           </button>
         </form>
         <ConfigButton />
-      </header>
+      </div>
     );
   }
 }

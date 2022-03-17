@@ -27,7 +27,7 @@ class Feedback extends React.Component {
     return (
       <>
         <Header />
-        <div className="feedback">
+        <div className="feedback animate__animated animate__rotateIn">
           <h1 data-testid="feedback-text">
             {this.handleAssertions(assertions)}
           </h1>
@@ -42,7 +42,9 @@ class Feedback extends React.Component {
             <p>pontos</p>
           </div>
         </div>
-        <div className="buttons-feedback">
+        <div
+          className="buttons-fdbck animate__animated animate__fadeInUp animate__delay-2s"
+        >
           <button
             data-testid="btn-play-again"
             type="button"

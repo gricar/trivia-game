@@ -22,14 +22,14 @@
   margin: 0 10px;
 }
 
-.buttons-feedback {
+.buttons-fdbck {
   align-items: center;
   display: flex;
   justify-content: space-evenly;
   width: 530px;
 }
 
-.buttons-feedback > button {
+.buttons-fdbck > button {
   background: var(--cor4);
   border-radius: 10px;
   color: white;
@@ -41,6 +41,6 @@
   padding: 20px;
 }
 
-.buttons-feedback > button:hover {
+.buttons-fdbck > button:hover {
   box-shadow: 10px 0 30px var(--cor3);
 }

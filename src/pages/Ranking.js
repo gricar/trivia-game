@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { saveRanking, getRanking } from '../services/localStorage';
 import getGravatarUrl from '../services/getGravatarUrls';
+import './ranking.css';
 
 class Ranking extends React.Component {
   renderRanking = () => {
@@ -13,23 +14,26 @@ class Ranking extends React.Component {
     const sortedRanking = playersRanking
       .sort((playerA, playerB) => playerB.score - playerA.score);
     return (
-      <div>
+      <tbody>
         {
           sortedRanking.map((person, index) => {
             const { gravatarEmail, name, score } = person;
             return (
-              <li key={ index }>
-                <img
-                  src={ getGravatarUrl(gravatarEmail) }
-                  alt="Gravatar"
-                />
-                <p data-testid={ `player-name-${index}` }>{name}</p>
-                <p data-testid={ `player-score-${score}` }>{score}</p>
-              </li>
+              <tr key={ index }>
+                <td>
+                  <img
+                    src={ getGravatarUrl(gravatarEmail) }
+                    className="profile-picture"
+                    alt="Gravatar"
+                  />
+                </td>
+                <td data-testid={ `player-name-${index}` }>{name}</td>
+                <td data-testid={ `player-score-${score}` }>{score}</td>
+              </tr>
             );
           })
         }
-      </div>
+      </tbody>
     );
   }
 
@@ -38,18 +42,23 @@ class Ranking extends React.Component {
     return (
       <>
         <h1 data-testid="ranking-title">Ranking</h1>
-        <div>
-          <ul>
-            { this.renderRanking() }
-          </ul>
-        </div>
+        <table className="ranking-table animate__animated animate__fadeInDownBig">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Name</th>
+              <th>Scores</th>
+            </tr>
+          </thead>
+          { this.renderRanking() }
+        </table>
         <button
           data-testid="btn-go-home"
           type="button"
+          className="button-back-to-home"
           onClick={ () => history.push('/') }
         >
-          <h4>Voltar ao inicio</h4>
-
+          Voltar ao inicio
         </button>
       </>
     );

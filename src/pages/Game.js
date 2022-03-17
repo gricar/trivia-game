@@ -181,9 +181,7 @@ class Game extends React.Component {
           tickTimer={ this.tickTimer }
           seconds={ seconds }
         />
-        <div>
-          { this.renderProperCard() }
-        </div>
+        { this.renderProperCard() }
         { this.renderNextButton()}
       </>
     );

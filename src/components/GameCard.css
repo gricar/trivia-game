@@ -5,3 +5,55 @@
 .background-red {
   border: 3px solid red;
 }
+
+.game-card {
+  align-items: center;
+  background-color: var(--cor1);
+  border: var(--cor2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  font-family: Helvetica , sans-serif;
+  justify-content: space-around;
+  max-width: 80vw;
+  min-height: 40vh;
+  min-width: 40vw;
+}
+
+.question-category {
+  border-bottom: 1px solid var(--cor3);
+  color: var(--cor3);
+  font-size: 22px;
+}
+
+.question-text {
+  color: var(--cor4);
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.answer-options {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-evenly;
+  min-width: 50vw;
+}
+
+.answers {
+  background: var(--cor2);
+  border: 1px solid var(--cor0);
+  border-radius: 5em;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 10px;
+  padding: 10px;
+  transition: transform 2s;
+  width: 40%;
+}
+
+.answers:hover {
+  box-shadow: 0 0 20px var(--cor2);
+}

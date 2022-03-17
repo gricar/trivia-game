@@ -7,6 +7,7 @@
 
 .header-profile-picture {
   border-radius: 100%;
+  box-shadow: 0 0 4px 2px black;
   width: 120px;
 }
 

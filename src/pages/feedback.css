@@ -1,0 +1,46 @@
+.feedback {
+  background-color: var(--cor3);
+  border: var(--cor4);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  padding: 15px 30px;
+  width: 400px;
+}
+
+.assertions {
+  align-items: center;
+  display: flex;
+  font-size: 30px;
+  font-weight: 700;
+  justify-content: center;
+}
+
+.assertions > h3 {
+  font-size: 30px;
+  margin: 0 10px;
+}
+
+.buttons-feedback {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  width: 530px;
+}
+
+.buttons-feedback > button {
+  background: var(--cor4);
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 10px;
+  padding: 20px;
+}
+
+.buttons-feedback > button:hover {
+  box-shadow: 10px 0 30px var(--cor3);
+}

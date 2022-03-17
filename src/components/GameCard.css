@@ -15,9 +15,9 @@
   flex-direction: column;
   font-family: Helvetica , sans-serif;
   justify-content: space-around;
-  max-width: 80vw;
+  max-width: 70vw;
   min-height: 40vh;
-  min-width: 40vw;
+  min-width: 30vw;
 }
 
 .question-category {
@@ -41,8 +41,7 @@
 
 .answers {
   background: var(--cor2);
-  border: 1px solid var(--cor0);
-  border-radius: 5em;
+  border-radius: 10px;
   color: white;
   cursor: pointer;
   font-size: 16px;
@@ -50,10 +49,22 @@
   letter-spacing: 1px;
   margin: 10px;
   padding: 10px;
-  transition: transform 2s;
   width: 40%;
 }
 
-.answers:hover {
+.next-button {
+  background: linear-gradient(to right, var(--cor1), var(--cor2));
+  border: 1px solid var(--cor2);
+  border-radius: 5em;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-top: 40px;
+  padding: 10px 20px;
+  width: 120px;
+}
+
+.answers:hover, .next-button:hover {
   box-shadow: 0 0 20px var(--cor2);
 }

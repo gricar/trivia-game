@@ -101,6 +101,7 @@ class Game extends React.Component {
           data-testid="btn-next"
           type="button"
           onClick={ this.nextQuestion }
+          className="next-button"
         >
           next
         </button>);

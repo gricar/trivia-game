@@ -7,9 +7,11 @@
 }
 
 .ranking-table th {
+  background-color: var(--cor4);
   border: 1px solid var(--cor3);
+  color: white;
   font-size: 20px;
-  padding: 10px;
+  padding: 12px 0;
 }
 
 .ranking-table td {
@@ -22,13 +24,6 @@
 
 .ranking-table tr:hover {
   background-color: var(--cor3);
-}
-
-.ranking-table th {
-  background-color: var(--cor4);
-  color: white;
-  padding: 12px 0;
-  text-align: center;
 }
 
 .profile-picture {

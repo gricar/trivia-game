@@ -27,11 +27,12 @@ class Header extends React.Component {
             {name}
           </p>
         </div>
-        <p data-testid="header-score" className="score">
+        <div className="score">
           Scores:
-          {' '}
-          {score}
-        </p>
+          <p data-testid="header-score">
+            {score}
+          </p>
+        </div>
       </div>
     );
   }

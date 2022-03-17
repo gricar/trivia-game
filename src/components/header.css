@@ -1,0 +1,29 @@
+.header-content {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  max-height: 30vh;
+  min-width: 50vw;
+}
+
+.header-profile-picture {
+  border-radius: 100%;
+  box-shadow: 0 0 4px 2px black;
+  width: 120px;
+}
+
+.player-name, .score {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.score {
+  align-items: center;
+  background-color: var(--cor1);
+  border: 2px solid var(--cor2);
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 15px;
+}

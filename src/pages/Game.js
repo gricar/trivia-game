@@ -101,6 +101,7 @@ class Game extends React.Component {
           data-testid="btn-next"
           type="button"
           onClick={ this.nextQuestion }
+          className="next-button"
         >
           next
         </button>);
@@ -181,9 +182,7 @@ class Game extends React.Component {
           tickTimer={ this.tickTimer }
           seconds={ seconds }
         />
-        <div>
-          { this.renderProperCard() }
-        </div>
+        { this.renderProperCard() }
         { this.renderNextButton()}
       </>
     );

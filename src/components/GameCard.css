@@ -5,3 +5,66 @@
 .background-red {
   border: 3px solid red;
 }
+
+.game-card {
+  align-items: center;
+  background-color: var(--cor1);
+  border: var(--cor2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  font-family: Helvetica , sans-serif;
+  justify-content: space-around;
+  max-width: 70vw;
+  min-height: 40vh;
+  min-width: 30vw;
+}
+
+.question-category {
+  border-bottom: 1px solid var(--cor3);
+  color: var(--cor3);
+  font-size: 22px;
+}
+
+.question-text {
+  color: var(--cor4);
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.answer-options {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-evenly;
+  min-width: 50vw;
+}
+
+.answers {
+  background: var(--cor2);
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 10px;
+  padding: 10px;
+  width: 40%;
+}
+
+.next-button {
+  background: linear-gradient(to right, var(--cor1), var(--cor2));
+  border: 1px solid var(--cor2);
+  border-radius: 5em;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-top: 25px;
+  padding: 10px 20px;
+  width: 120px;
+}
+
+.answers:hover, .next-button:hover {
+  box-shadow: 0 0 20px var(--cor2);
+}

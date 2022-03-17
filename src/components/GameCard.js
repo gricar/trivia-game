@@ -41,13 +41,23 @@ class GameCard extends React.Component {
     const { hasChoicesExpired, questions } = this.props;
 
     return (
-      <div className="game-card">
-        <h3 data-testid="question-category">{ questions.category}</h3>
-        <h3 data-testid="question-text">{questions.question}</h3>
-        <div data-testid="answer-options">
+      <div className="game-card animate__animated animate__zoomIn">
+        <h3
+          data-testid="question-category"
+          className="question-category"
+        >
+          { `Gategory: ${questions.category}`}
+        </h3>
+        <h3
+          data-testid="question-text"
+          className="question-text"
+        >
+          {questions.question}
+        </h3>
+        <div data-testid="answer-options" className="answer-options">
           { questions.answers.map((el, index) => (
             <button
-              className="answers"
+              className="answers animate__animated animate__zoomIn animate__delay-1s"
               data-testid={ this.setDatatestId(el, index) }
               type="button"
               key={ index }

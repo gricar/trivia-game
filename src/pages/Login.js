@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { setUser, fetchTokenThunk } from '../redux/actions';
 import logo from '../trivia.png';
 import ConfigButton from '../components/ConfigButton';
-import './game.css';
+import './login.css';
 import 'animate.css';
 
 class Login extends React.Component {

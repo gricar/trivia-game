@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import getGravatarUrl from '../services/getGravatarUrls';
+import './header.css';
 
 class Header extends React.Component {
   componentDidUpdate = () => {
@@ -13,18 +14,25 @@ class Header extends React.Component {
     const { name, gravatarEmail, score } = this.props;
     return (
       <div className="header-content">
-        <img
-          data-testid="header-profile-picture"
-          src={ getGravatarUrl(gravatarEmail) }
-          alt="Gravatar"
-        />
-        <p data-testid="header-player-name">
-          Nome:
-          {name}
-        </p>
-        <p data-testid="header-score">
-          {score}
-        </p>
+        <div>
+          <img
+            className="header-profile-picture"
+            data-testid="header-profile-picture"
+            src={ getGravatarUrl(gravatarEmail) }
+            alt="Gravatar"
+          />
+          <p data-testid="header-player-name" className="player-name">
+            Name:
+            {' '}
+            {name}
+          </p>
+        </div>
+        <div className="score">
+          Scores:
+          <p data-testid="header-score">
+            {score}
+          </p>
+        </div>
       </div>
     );
   }

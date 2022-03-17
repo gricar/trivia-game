@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import './feedback.css';
 
 class Feedback extends React.Component {
   // Lint?
@@ -26,32 +27,39 @@ class Feedback extends React.Component {
     return (
       <>
         <Header />
-        <h1 data-testid="feedback-text">
-          {this.handleAssertions(assertions)}
-        </h1>
-        <p>Voce acertou: </p>
-        <h2 data-testid="feedback-total-question">{assertions}</h2>
-        <p>Seu placar final eh: </p>
-        <h2 data-testid="feedback-total-score">{score}</h2>
-
-        <button
-          data-testid="btn-play-again"
-          type="button"
-          onClick={ () => history.push('/') }
+        <div className="feedback animate__animated animate__rotateIn">
+          <h1 data-testid="feedback-text">
+            {this.handleAssertions(assertions)}
+          </h1>
+          <div className="assertions">
+            <p>Voce acertou</p>
+            <h3 data-testid="feedback-total-question">{assertions}</h3>
+            <p>perguntas</p>
+          </div>
+          <div className="assertions">
+            <p>Seu placar final é</p>
+            <h3 data-testid="feedback-total-score">{score}</h3>
+            <p>pontos</p>
+          </div>
+        </div>
+        <div
+          className="buttons-fdbck animate__animated animate__fadeInUp animate__delay-2s"
         >
-          <h3>Clique aqui para jogar novamente!</h3>
-
-        </button>
-
-        <button
-          data-testid="btn-ranking"
-          type="button"
-          onClick={ () => history.push('/ranking') }
-        >
-          <h3>Melhores Resultados</h3>
-
-        </button>
-
+          <button
+            data-testid="btn-play-again"
+            type="button"
+            onClick={ () => history.push('/') }
+          >
+            Jogar novamente
+          </button>
+          <button
+            data-testid="btn-ranking"
+            type="button"
+            onClick={ () => history.push('/ranking') }
+          >
+            Melhores resultados
+          </button>
+        </div>
       </>
     );
   }

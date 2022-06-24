@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { saveRanking, getRanking } from '../services/localStorage';
+import { getRanking } from '../services/localStorage';
 import getGravatarUrl from '../services/getGravatarUrls';
 import './ranking.css';
 
 class Ranking extends React.Component {
   renderRanking = () => {
-    const { player } = this.props;
-    saveRanking(player);
+    /* const { player } = this.props;
+    saveRanking(player); */
 
     const playersRanking = getRanking();
     const sortedRanking = playersRanking

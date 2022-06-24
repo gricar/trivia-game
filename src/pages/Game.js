@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import { expireChoices, fetchQuestionsAndAnswersThunk } from '../redux/actions';
 import GameCard from '../components/GameCard';
 import Timer from '../components/Timer';
+import { saveRanking } from '../services/localStorage';
 
 const RED_BACKGROUND = 'background-red';
 const GREEN_BACKGROUND = 'background-green';
@@ -110,7 +111,7 @@ class Game extends React.Component {
 
   renderProperCard = () => {
     const { gamePhase, isNextButtonShowed, seconds } = this.state;
-    const { questions, history } = this.props;
+    const { questions, history, player } = this.props;
 
     if (questions.length > 0) {
       const NUMBERS = ['0', '1', '2', '3', '4', '5'];
@@ -162,6 +163,7 @@ class Game extends React.Component {
           questions={ questions[4] }
         />);
       case NUMBERS[5]:
+        saveRanking(player);
         history.push('/feedback');
         break;
       default:
@@ -196,12 +198,14 @@ Game.propTypes = {
   enableQuestionsButton: PropTypes.func.isRequired,
   disableQuestionsButton: PropTypes.func.isRequired,
   history: PropTypes.objectOf(Object).isRequired,
+  player: PropTypes.shape().isRequired,
 };
 
-const mapStateToProps = ({ hasToken, token, questions }) => ({
+const mapStateToProps = ({ hasToken, token, questions, player }) => ({
   hasToken,
   token,
   questions,
+  player,
 });
 
 const mapDispatchToProps = (dispatch) => ({
